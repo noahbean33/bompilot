@@ -1,0 +1,22 @@
+Subject: Your BOMExplorer Pro trial has ended
+
+Hi,
+
+Your BOMexplorer Pro trial has ended. Your account has reverted to the Free tier.
+
+Free tier limits:
+  • Up to 3 projects
+  • Up to 100 BOM lines
+  • AI Assist (20 lines/month)
+  • AI Advisor (5 queries/month)
+
+Subscribe to Pro for $10/month to restore:
+  • Unlimited projects
+  • Unlimited BOM lines
+  • AI Assist (500 lines/month)
+  • AI Advisor (50 queries/month)
+
+Subscribe here:
+  {subscribe_link}
+
+Thanks for trying BOMexplorer Pro!

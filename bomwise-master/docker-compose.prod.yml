@@ -1,0 +1,124 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-bomexplorer}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD required}
+      POSTGRES_DB: ${POSTGRES_DB:-bomexplorer}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-bomexplorer}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+      args:
+        APP_VERSION: ${APP_VERSION:-unknown}
+        GIT_COMMIT: ${GIT_COMMIT:-unknown}
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./scripts:/app/scripts
+      - ./VERSION:/app/VERSION:ro
+    env_file:
+      - .env
+    environment:
+      - PYTHONPATH=/app
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-bomexplorer}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD required}@postgres:5432/${POSTGRES_DB:-bomexplorer}
+      - REDIS_URL=redis://redis:6379/0
+      - APP_BASE_URL=https://app.bomexplorer.app
+      - ENVIRONMENT=production
+      - APP_VERSION=${APP_VERSION:-unknown}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  celery-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+      args:
+        APP_VERSION: ${APP_VERSION:-unknown}
+        GIT_COMMIT: ${GIT_COMMIT:-unknown}
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - PYTHONPATH=/app
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-bomexplorer}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD required}@postgres:5432/${POSTGRES_DB:-bomexplorer}
+      - REDIS_URL=redis://redis:6379/0
+      - APP_BASE_URL=https://app.bomexplorer.app
+      - ENVIRONMENT=production
+      - CELERY_WORKER=1
+      - APP_VERSION=${APP_VERSION:-unknown}
+    command: uv run celery -A app.worker worker --loglevel=info --concurrency=2
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  celery-beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+      args:
+        APP_VERSION: ${APP_VERSION:-unknown}
+        GIT_COMMIT: ${GIT_COMMIT:-unknown}
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - PYTHONPATH=/app
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-bomexplorer}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD required}@postgres:5432/${POSTGRES_DB:-bomexplorer}
+      - REDIS_URL=redis://redis:6379/0
+      - APP_BASE_URL=https://app.bomexplorer.app
+      - ENVIRONMENT=production
+      - CELERY_BEAT=1
+      - APP_VERSION=${APP_VERSION:-unknown}
+    command: uv run celery -A app.worker beat --loglevel=info
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+      args:
+        - VITE_API_BASE_URL=https://app.bomexplorer.app/api
+    restart: always
+    ports:
+      - "3000:80"
+
+volumes:
+  postgres_data:
+  redis_data:

@@ -1,0 +1,114 @@
+---
+export interface Props {
+	currentPage?: string;
+}
+
+const { currentPage } = Astro.props;
+---
+
+<nav class="sticky top-0 z-50 bg-[var(--color-surface)]/90 backdrop-blur-md border-b border-[var(--color-border)]">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="flex justify-between h-16">
+			<div class="flex items-center">
+				<a href="/" class="flex items-center text-2xl font-bold font-mono text-[var(--color-text)]">
+					<img src="/mag_glass_logo_transparent.png?v=2" alt="BOMexplorer logo" class="h-8 w-auto mr-3" />
+					<span>BOM<span class="text-[var(--color-secondary)]">explorer</span></span>
+				</a>
+			</div>
+			<div class="hidden md:flex items-center space-x-8">
+				<div class="relative group">
+					<a href="/features" class={`text-sm font-medium transition-colors ${currentPage === 'features' ? 'text-[var(--color-primary)]' : 'text-[var(--color-text)] hover:text-[var(--color-primary)]'}`}>
+						Features
+					</a>
+					{currentPage === 'features' && (
+						<div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--color-secondary)] to-[var(--color-secondary)]/50 rounded-full"></div>
+					)}
+				</div>
+				<div class="relative group">
+					<a href="/why" class={`text-sm font-medium transition-colors ${currentPage === 'why' ? 'text-[var(--color-primary)]' : 'text-[var(--color-text)] hover:text-[var(--color-primary)]'}`}>
+						Why BOMexplorer
+					</a>
+					{currentPage === 'why' && (
+						<div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--color-secondary)] to-[var(--color-secondary)]/50 rounded-full"></div>
+					)}
+				</div>
+				<div class="relative group">
+					<a href="/pricing" class={`text-sm font-medium transition-colors ${currentPage === 'pricing' ? 'text-[var(--color-primary)]' : 'text-[var(--color-text)] hover:text-[var(--color-primary)]'}`}>
+						Pricing
+					</a>
+					{currentPage === 'pricing' && (
+						<div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--color-secondary)] to-[var(--color-secondary)]/50 rounded-full"></div>
+					)}
+				</div>
+				<div class="relative group">
+					<a href="/about" class={`text-sm font-medium transition-colors ${currentPage === 'about' ? 'text-[var(--color-primary)]' : 'text-[var(--color-text)] hover:text-[var(--color-primary)]'}`}>
+						About
+					</a>
+					{currentPage === 'about' && (
+						<div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--color-secondary)] to-[var(--color-secondary)]/50 rounded-full"></div>
+					)}
+				</div>
+				<div class="relative group">
+					<a href="/faq" class={`text-sm font-medium transition-colors ${currentPage === 'faq' ? 'text-[var(--color-primary)]' : 'text-[var(--color-text)] hover:text-[var(--color-primary)]'}`}>
+						FAQ
+					</a>
+					{currentPage === 'faq' && (
+						<div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--color-secondary)] to-[var(--color-secondary)]/50 rounded-full"></div>
+					)}
+				</div>
+				<a href="/contact" class="bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white px-4 py-2 rounded-md text-sm font-medium hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-200">
+					Get Early Access
+				</a>
+			</div>
+			<div class="md:hidden flex items-center">
+				<button id="mobile-menu-button" class="text-[var(--color-text)] hover:text-[var(--color-primary)] focus:outline-none focus:text-[var(--color-primary)] transition-colors">
+					<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+					</svg>
+				</button>
+			</div>
+		</div>
+		<div id="mobile-menu" class="hidden md:hidden pb-4 animate-in fade-in duration-200">
+			<div class="px-2 pt-2 pb-3 space-y-1 border-t border-[var(--color-border)] mt-4">
+				<a href="/features" class={`block px-3 py-2 text-base font-medium rounded-md transition-colors ${currentPage === 'features' ? 'text-[var(--color-primary)] bg-[var(--color-primary-dim)]' : 'text-[var(--color-text)] hover:text-[var(--color-primary)] hover:bg-[var(--color-surface-2)]'}`}>
+					Features
+				</a>
+				<a href="/why" class={`block px-3 py-2 text-base font-medium rounded-md transition-colors ${currentPage === 'why' ? 'text-[var(--color-primary)] bg-[var(--color-primary-dim)]' : 'text-[var(--color-text)] hover:text-[var(--color-primary)] hover:bg-[var(--color-surface-2)]'}`}>
+					Why BOMexplorer
+				</a>
+				<a href="/pricing" class={`block px-3 py-2 text-base font-medium rounded-md transition-colors ${currentPage === 'pricing' ? 'text-[var(--color-primary)] bg-[var(--color-primary-dim)]' : 'text-[var(--color-text)] hover:text-[var(--color-primary)] hover:bg-[var(--color-surface-2)]'}`}>
+					Pricing
+				</a>
+				<a href="/about" class={`block px-3 py-2 text-base font-medium rounded-md transition-colors ${currentPage === 'about' ? 'text-[var(--color-primary)] bg-[var(--color-primary-dim)]' : 'text-[var(--color-text)] hover:text-[var(--color-primary)] hover:bg-[var(--color-surface-2)]'}`}>
+					About
+				</a>
+				<a href="/faq" class={`block px-3 py-2 text-base font-medium rounded-md transition-colors ${currentPage === 'faq' ? 'text-[var(--color-primary)] bg-[var(--color-primary-dim)]' : 'text-[var(--color-text)] hover:text-[var(--color-primary)] hover:bg-[var(--color-surface-2)]'}`}>
+					FAQ
+				</a>
+				<a href="/contact" class="block px-3 py-2 bg-gradient-to-r from-[#3b82f6] to-[#2563eb] text-white rounded-md text-base font-medium hover:shadow-lg transition-all duration-200">
+					Get Early Access
+				</a>
+			</div>
+		</div>
+	</div>
+</nav>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const mobileMenuButton = document.getElementById('mobile-menu-button');
+		const mobileMenu = document.getElementById('mobile-menu');
+
+		if (mobileMenuButton && mobileMenu) {
+			mobileMenuButton.addEventListener('click', function() {
+				mobileMenu.classList.toggle('hidden');
+			});
+
+			// Close menu when clicking outside on desktops
+			document.addEventListener('click', function(event) {
+				if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+					mobileMenu.classList.add('hidden');
+				}
+			});
+		}
+	});
+</script>

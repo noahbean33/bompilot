@@ -1,0 +1,189 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import FaqItem from '../components/FaqItem.astro';
+---
+
+<MarketingLayout title="FAQ - BOMexplorer" currentPage="faq">
+	<section class="py-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-4xl mx-auto">
+			<div class="text-center mb-16">
+				<h1 class="text-5xl font-bold text-[var(--color-text)] mb-6 font-mono">
+					Frequently asked questions
+				</h1>
+				<p class="text-xl text-[var(--color-text-muted)]">
+					Everything you need to know about BOMexplorer
+				</p>
+			</div>
+
+			<div class="space-y-4" id="faq-accordion">
+				<h2 class="text-2xl font-bold text-[var(--color-text)] mb-6 font-mono pl-4 border-l-4 border-[var(--color-secondary)]">Getting started</h2>
+
+				<FaqItem
+					question="What file formats does BOMexplorer accept?"
+					answer="BOMexplorer accepts KiCad BOM CSV exports (Symbol Fields Table), Altium BOM exports, and generic CSV formats. Drag-and-drop your file — intelligent column header mapping handles Refs, RefDes, Designator, Qty, MPN, Value, and more automatically."
+				/>
+
+
+				<FaqItem
+					question="Which KiCad versions are supported?"
+					answer="BOMexplorer works with BOM CSV files from KiCad 5.0 and later. It also supports Altium BOM exports and any generic CSV with recognizable column headers."
+				/>
+
+				<FaqItem
+					question="How do I get started?"
+					answer="Simply upload your BOM CSV file. BOMexplorer auto-detects columns, matches parts against providers, and presents results in seconds. No configuration needed to start."
+				/>
+
+				<h2 class="text-2xl font-bold text-[var(--color-text)] mb-6 mt-12 font-mono pl-4 border-l-4 border-[var(--color-secondary)]">Providers & matching</h2>
+
+				<FaqItem
+					question="Which providers are supported?"
+					answer="BOMexplorer integrates with 6 providers: Nexar, OEMSecrets, DigiKey, Mouser, FindChips, and NextPCB. Free tier uses one configured provider. Pro tier accesses all 6 with automatic fallback."
+				/>
+
+				<FaqItem
+					question="How does provider fallback work?"
+					answer="If the active provider returns no results for a component, BOMexplorer automatically tries the next configured provider in sequence. This continues until a match is found or all providers are exhausted. Admins can configure the provider priority order."
+				/>
+
+				<FaqItem
+					question="What is a 'confidence score'?"
+					answer="Confidence badges indicate match type: Exact MPN (highest confidence), Parametric match, Keyword match, AI-suggested, and Unmatched. Scores help you quickly assess match reliability at a glance."
+				/>
+
+				<FaqItem
+					question="How does the matching algorithm work?"
+					answer="Hierarchical matching: (1) Exact MPN match → (2) Hyphen-stripped MPN match → (3) Distributor part number match → (4) Keyword search. Multi-stage matching maximizes coverage across providers."
+				/>
+
+				<h2 class="text-2xl font-bold text-[var(--color-text)] mb-6 mt-12 font-mono pl-4 border-l-4 border-[var(--color-secondary)]">AI features</h2>
+
+				<FaqItem
+					question="What is AI Assist?"
+					answer="AI Assist has two components: (1) Natural language BOM filtering — type plain English queries like 'show me capacitors under $0.10' to highlight matching rows, and (2) AI part classification — Claude-powered classification for components that traditional matching can't handle."
+				/>
+
+				<FaqItem
+					question="How does AI part classification work?"
+					answer="When a component can't be matched through normal means (crystal symbols, fiducials, mounting holes, copper-only net ties), Claude AI classifies the component and generates a provider-specific query to try to find a match. Unmatchable values are added to the smart skip list automatically."
+				/>
+
+				<FaqItem
+					question="What is the smart skip list?"
+					answer="BOMexplorer automatically skips known unmatchable values like TestPoint, LED, Fiducial, MountingHole unless an explicit MPN is provided. This prevents false matches and saves API calls."
+				/>
+
+				<FaqItem
+					question="How many AI Assist lines do I get?"
+					answer="Free tier: 50 AI Assist lines per month. Pro tier: 500 AI Assist lines per month. Both natural language query and AI classification count toward this limit."
+				/>
+
+				<h2 class="text-2xl font-bold text-[var(--color-text)] mb-6 mt-12 font-mono pl-4 border-l-4 border-[var(--color-secondary)]">Monitoring & alerts</h2>
+
+				<FaqItem
+					question="How often are parts re-checked?"
+					answer="Free tier: manual refresh only. Pro tier: automated overnight re-query via Celery background job. All active BOM lines are re-checked for price and stock changes while you sleep."
+				/>
+
+				<FaqItem
+					question="What supply chain flags are detected?"
+					answer="Out-of-stock, low-stock, price spikes, end-of-life (EOL) notices, and lead-time increases. Each flag has a lifecycle: Open → Watching → Ignored → Resolved with snooze support."
+				/>
+
+				<FaqItem
+					question="How are alerts delivered?"
+					answer="Alerts appear in-app with visual flag indicators. Pro tier also receives morning digest emails summarizing all new flags detected overnight. Configure thresholds per project in preferences."
+				/>
+
+				<FaqItem
+					question="Can I set custom stock thresholds?"
+					answer="Yes, per-project overrides let you set custom stock level thresholds for alerts. Global preferences define default behavior, and projects inherit those values unless overridden."
+				/>
+
+				<h2 class="text-2xl font-bold text-[var(--color-text)] mb-6 mt-12 font-mono pl-4 border-l-4 border-[var(--color-secondary)]">Substitution & alternatives</h2>
+
+				<FaqItem
+					question="How do I swap a part?"
+					answer="Navigate to the Alternatives page for any BOM line. All ranked candidate parts are shown with pricing, stock, and distributor info. Click swap on any alternative and confirm — the substitution is recorded with timestamp and reason."
+				/>
+
+				<FaqItem
+					question="Can I see substitution history?"
+					answer="Yes. Each BOM line has a collapsible substitution timeline showing all swaps with the old MPN, new MPN, timestamp, and trigger reason. Full audit trail for compliance."
+				/>
+
+				<FaqItem
+					question="What is part ranking?"
+					answer="When multiple alternatives exist, BOMexplorer ranks them by suitability. AI-suggested candidates are marked with a badge. Rank 2+ results are automatically stored as alternatives for future reference."
+				/>
+
+				<h2 class="text-2xl font-bold text-[var(--color-text)] mb-6 mt-12 font-mono pl-4 border-l-4 border-[var(--color-secondary)]">Export</h2>
+
+				<FaqItem
+					question="What export formats are supported?"
+					answer="Three formats: (1) CSV — UTF-8 BOM, comma-separated, (2) Excel — bold headers, auto-sized columns, sheet named 'BOM', (3) Manufacturer CSV — 12-column format ready for assembly partners."
+				/>
+
+				<FaqItem
+					question="Will locked parts survive re-export?"
+					answer="Yes. Locked parts are preserved across re-matching and re-export. Use row locking to freeze confirmed parts so they never change unexpectedly."
+				/>
+
+				<h2 class="text-2xl font-bold text-[var(--color-text)] mb-6 mt-12 font-mono pl-4 border-l-4 border-[var(--color-secondary)]">Billing & plans</h2>
+
+				<FaqItem
+					question="Is there a free tier?"
+					answer="Yes, always free. Includes 3 projects, 50 BOM lines per project, single provider, 50 AI Assist lines/month, CSV & Excel export. No credit card required."
+				/>
+
+				<FaqItem
+					question="What does Pro include?"
+					answer="Unlimited projects, unlimited BOM lines, all 6 providers, 500 AI Assist lines/month, natural language BOM query, overnight supply chain monitoring, email alerts, part substitution history. $19/month via Paddle."
+				/>
+
+				<FaqItem
+					question="How is payment processed?"
+					answer="All Pro subscriptions are processed securely through Paddle. Supports cards, Apple Pay, and more. Cancel anytime from preferences — access continues until billing period ends."
+				/>
+
+				<FaqItem
+					question="Do you offer discounts?"
+					answer="Contact us for academic and open-source project discounts. We support educators and community builders with special pricing."
+				/>
+
+				<h2 class="text-2xl font-bold text-[var(--color-text)] mb-6 mt-12 font-mono pl-4 border-l-4 border-[var(--color-secondary)]">Preferences & configuration</h2>
+
+				<FaqItem
+					question="What can I configure in preferences?"
+					answer="Global preferences: distributor order, excluded distributors, preferred manufacturers, accept generic passives, lifecycle policy, currency, region, grade. Per-project overrides: distributor restrictions, quantity, grade, lifecycle policy (null values inherit from global)."
+				/>
+
+				<h2 class="text-2xl font-bold text-[var(--color-text)] mb-6 mt-12 font-mono pl-4 border-l-4 border-[var(--color-secondary)]">Privacy & data</h2>
+
+				<FaqItem
+					question="Do you store my BOM data?"
+					answer="Your BOM files are processed in real-time. Raw CSV rows are preserved as JSON per line to enable re-matching without re-import. Create an account to save projects permanently. We only retain the minimum data necessary for providing the service."
+				/>
+
+				<FaqItem
+					question="Is my component data shared with providers?"
+					answer="No. We query providers' public APIs and websites but never share your BOM data with them. Your component lists remain private."
+				/>
+
+				<FaqItem
+					question="How do you handle data security?"
+					answer="JWT authentication with short-lived access + refresh tokens in httpOnly cookies. All data is encrypted in transit and at rest. Password reset uses tokenised email links with 24h expiry and always-200 responses to prevent email enumeration."
+				/>
+			</div>
+
+			<div class="mt-16 text-center">
+				<p class="text-[var(--color-text-muted)] mb-4">
+					Still have questions?
+				</p>
+				<a href="/contact" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-md font-semibold hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-200 inline-block">
+					Contact Us
+				</a>
+			</div>
+		</div>
+	</section>
+</MarketingLayout>

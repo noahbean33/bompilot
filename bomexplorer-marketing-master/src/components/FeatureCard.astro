@@ -1,0 +1,15 @@
+---
+export interface Props {
+	title: string;
+	description: string;
+	icon?: string;
+}
+
+const { title, description, icon } = Astro.props;
+---
+
+<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6 shadow-[var(--shadow-card)] hover:border-[var(--color-secondary)] hover:shadow-[var(--shadow-glow-teal)] transition-all duration-200">
+	{icon && <div class="text-[var(--color-secondary)] text-3xl mb-4 font-mono">{icon}</div>}
+	<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2 font-mono">{title}</h3>
+	<p class="text-[var(--color-text-muted)] text-sm leading-relaxed">{description}</p>
+</div>

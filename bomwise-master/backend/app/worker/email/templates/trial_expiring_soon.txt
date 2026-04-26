@@ -1,0 +1,16 @@
+Subject: Your BOMExplorer Pro access expires in 10 days
+
+Hi,
+
+Your BOMexplorer Pro trial expires on {trial_end_date} — that's 10 days from now.
+
+After expiry, your account will revert to the Free tier:
+  • Up to 3 projects
+  • Up to 100 BOM lines
+  • AI Assist (20 lines/month)
+  • AI Advisor (5 queries/month)
+
+Subscribe now to keep Pro access:
+  {subscribe_link}
+
+Questions? Reply to this email.

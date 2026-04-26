@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOMExplorer — VPS Deployment Guide</title>
+    <meta name="description" content="Complete deployment guide for BOMExplorer application on Hetzner VPS">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+    <style>
+        /* ============================================================
+           CSS CUSTOM PROPERTIES
+           ============================================================ */
+        :root {
+            --color-bg-primary: #ffffff;
+            --color-bg-secondary: #f8f9fa;
+            --color-bg-tertiary: #e9ecef;
+            --color-bg-code: #f1f3f4;
+            --color-bg-sidebar: #ffffff;
+            --color-text-primary: #1a1a2e;
+            --color-text-secondary: #495057;
+            --color-text-muted: #6c757d;
+            --color-text-code: #d63384;
+            --color-border: #dee2e6;
+            --color-border-light: #e9ecef;
+            --color-primary: #2563eb;
+            --color-primary-hover: #1d4ed8;
+            --color-primary-light: #dbeafe;
+            --color-success: #059669;
+            --color-success-bg: #d1fae5;
+            --color-warning: #d97706;
+            --color-warning-bg: #fef3c7;
+            --color-danger: #dc2626;
+            --color-danger-bg: #fee2e2;
+            --color-info: #0891b2;
+            --color-info-bg: #cffafe;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --sidebar-width: 280px;
+            --header-height: 64px;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', 'Courier New', monospace;
+        }
+
+        [data-theme="dark"] {
+            --color-bg-primary: #0d1117;
+            --color-bg-secondary: #161b22;
+            --color-bg-tertiary: #21262d;
+            --color-bg-code: #1c2128;
+            --color-bg-sidebar: #161b22;
+            --color-text-primary: #e6edf3;
+            --color-text-secondary: #b1bac4;
+            --color-text-muted: #768390;
+            --color-text-code: #f778ba;
+            --color-border: #30363d;
+            --color-border-light: #21262d;
+            --color-primary: #58a6ff;
+            --color-primary-hover: #79b8ff;
+            --color-primary-light: #1a3a5f;
+            --color-success: #3fb950;
+            --color-success-bg: #1a3a2a;
+            --color-warning: #d29922;
+            --color-warning-bg: #3a2d1a;
+            --color-danger: #f85149;
+            --color-danger-bg: #3a1a1a;
+            --color-info: #39d2c0;
+            --color-info-bg: #1a3a36;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+        }
+
+        /* ============================================================
+           BASE RESETS & TYPOGRAPHY
+           ============================================================ */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        body {
+            font-family: var(--font-sans);
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            line-height: 1.7;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ============================================================
+           HEADER
+           ============================================================ */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: var(--color-bg-primary);
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--color-text-primary);
+        }
+        .header-logo {
+            width: 36px;
+            height: 36px;
+            background: var(--color-primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+        .header-title {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+        .header-version {
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 12px;
+        }
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .search-box {
+            position: relative;
+        }
+        .search-box input {
+            width: 240px;
+            padding: 8px 12px 8px 36px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            background: var(--color-bg-secondary);
+            color: var(--color-text-primary);
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px var(--color-primary-light);
+            width: 300px;
+        }
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-text-muted);
+            pointer-events: none;
+        }
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 8px;
+            cursor: pointer;
+            color: var(--color-text-secondary);
+            transition: all 0.2s;
+            font-size: 18px;
+        }
+        .theme-toggle:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--color-text-primary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* ============================================================
+           SIDEBAR NAVIGATION
+           ============================================================ */
+        .sidebar {
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            width: var(--sidebar-width);
+            height: calc(100vh - var(--header-height));
+            background: var(--color-bg-sidebar);
+            border-right: 1px solid var(--color-border);
+            overflow-y: auto;
+            padding: 20px 0;
+            z-index: 900;
+        }
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-track { background: transparent; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
+        .sidebar-group { margin-bottom: 16px; }
+        .sidebar-group-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--color-text-muted);
+            padding: 0 20px;
+            margin-bottom: 8px;
+        }
+        .sidebar-link {
+            display: block;
+            padding: 6px 20px 6px 24px;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            border-left: 3px solid transparent;
+            transition: all 0.15s;
+        }
+        .sidebar-link:hover {
+            color: var(--color-text-primary);
+            background: var(--color-bg-secondary);
+        }
+        .sidebar-link.active {
+            color: var(--color-primary);
+            border-left-color: var(--color-primary);
+            background: var(--color-primary-light);
+            font-weight: 600;
+        }
+        .sidebar-link.sub-item {
+            padding-left: 40px;
+            font-size: 13px;
+        }
+
+        /* ============================================================
+           MAIN CONTENT
+           ============================================================ */
+        .main {
+            margin-left: var(--sidebar-width);
+            margin-top: var(--header-height);
+            padding: 40px 48px 80px;
+            max-width: 960px;
+        }
+
+        /* ============================================================
+           TYPOGRAPHY ELEMENTS
+           ============================================================ */
+        h1 {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            color: var(--color-text-primary);
+        }
+        .subtitle {
+            font-size: 18px;
+            color: var(--color-text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+        .last-updated {
+            font-size: 14px;
+            color: var(--color-text-muted);
+            margin-bottom: 40px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--color-border-light);
+        }
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-top: 56px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--color-border-light);
+            color: var(--color-text-primary);
+            scroll-margin-top: calc(var(--header-height) + 20px);
+        }
+        h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-top: 32px;
+            margin-bottom: 12px;
+            color: var(--color-text-primary);
+        }
+        h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 8px;
+            color: var(--color-text-primary);
+        }
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text-secondary);
+        }
+        a { color: var(--color-primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        a:hover { text-decoration-color: var(--color-primary-hover); }
+
+        /* ============================================================
+           CODE BLOCKS & INLINE CODE
+           ============================================================ */
+        code {
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+            background: var(--color-bg-code);
+            color: var(--color-text-code);
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+        }
+        .code-block {
+            position: relative;
+            margin: 20px 0;
+            background: var(--color-bg-code);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border-light);
+            overflow: hidden;
+        }
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 16px;
+            background: var(--color-bg-tertiary);
+            border-bottom: 1px solid var(--color-border);
+            font-size: 13px;
+            color: var(--color-text-muted);
+        }
+        .code-copy-btn {
+            background: none;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            padding: 4px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            color: var(--color-text-muted);
+            transition: all 0.2s;
+            font-family: var(--font-sans);
+        }
+        .code-copy-btn:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            background: var(--color-primary-light);
+        }
+        .code-copy-btn.copied {
+            border-color: var(--color-success);
+            color: var(--color-success);
+            background: var(--color-success-bg);
+        }
+        pre {
+            padding: 16px;
+            overflow-x: auto;
+            line-height: 1.6;
+            margin: 0;
+        }
+        pre code {
+            background: none;
+            color: var(--color-text-primary);
+            padding: 0;
+            font-size: 13px;
+        }
+
+        /* ============================================================
+           TABLES
+           ============================================================ */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--color-border-light);
+        }
+        th {
+            font-weight: 600;
+            background: var(--color-bg-secondary);
+            color: var(--color-text-primary);
+        }
+        td { color: var(--color-text-secondary); }
+        tr:last-child td { border-bottom: none; }
+
+        /* ============================================================
+           ALERT BOXES
+           ============================================================ */
+        .alert {
+            padding: 16px 20px;
+            border-left: 4px solid;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: 20px 0;
+        }
+        .alert-info {
+            border-color: var(--color-info);
+            background: var(--color-info-bg);
+        }
+        .alert-warning {
+            border-color: var(--color-warning);
+            background: var(--color-warning-bg);
+        }
+        .alert-danger {
+            border-color: var(--color-danger);
+            background: var(--color-danger-bg);
+        }
+        .alert-success {
+            border-color: var(--color-success);
+            background: var(--color-success-bg);
+        }
+        .alert-title {
+            font-weight: 700;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+        .alert-info .alert-title { color: var(--color-info); }
+        .alert-warning .alert-title { color: var(--color-warning); }
+        .alert-danger .alert-title { color: var(--color-danger); }
+        .alert-success .alert-title { color: var(--color-success); }
+        .alert p { margin: 0; font-size: 14px; }
+        .alert code { font-size: 0.85em; }
+
+        /* ============================================================
+           CHECKLISTS
+           ============================================================ */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--color-border-light);
+            color: var(--color-text-secondary);
+        }
+        .checklist li:last-child { border-bottom: none; }
+        .checklist .check {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+        }
+        .checklist .check.checked { background: var(--color-success); }
+        .checklist .check.unchecked { background: var(--color-border); }
+
+        /* ============================================================
+           ARCHITECTURE DIAGRAM
+           ============================================================ */
+        .architecture {
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin: 20px 0;
+        }
+        .arch-node {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            margin: 6px 0;
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-family: var(--font-mono);
+            font-size: 13px;
+        }
+        .arch-node .arrow {
+            color: var(--color-primary);
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .arch-level {
+            margin-left: 32px;
+        }
+
+        /* ============================================================
+           STEP INDICATOR
+           ============================================================ */
+        .step {
+            display: flex;
+            gap: 16px;
+            margin: 24px 0;
+        }
+        .step-number {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            background: var(--color-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .step-content { flex: 1; }
+
+        /* ============================================================
+           PRINT STYLES
+           ============================================================ */
+        @media print {
+            .header, .sidebar, .menu-toggle, .theme-toggle,
+            .code-copy-btn, .search-box { display: none !important; }
+            .main { margin-left: 0; padding: 20px 0; }
+            a { color: #333; }
+            a[href]:after { content: " (" attr(href) ")"; font-size: 12px; color: #666; }
+            h2, h3 { page-break-after: avoid; }
+            .code-block { break-inside: avoid; border: 1px solid #ccc; }
+            .alert { break-inside: avoid; border: 1px solid #999; }
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
+            .main { margin-left: 0; max-width: 100%; padding: 32px 24px 60px; }
+            .menu-toggle { display: block; }
+            .search-box input { width: 180px; }
+            .search-box input:focus { width: 200px; }
+        }
+        @media (max-width: 640px) {
+            .search-box { display: none; }
+            h1 { font-size: 28px; }
+            h2 { font-size: 24px; }
+            .header-version { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="header">
+    <a href="#" class="header-brand">
+        <div class="header-logo">📋</div>
+        <span class="header-title">BOMExplorer Deployment Guide</span>
+        <span class="header-version">v1.0.0</span>
+    </a>
+    <div class="header-controls">
+        <div class="search-box">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" id="searchInput" placeholder="Search documentation..." aria-label="Search">
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+    </div>
+</header>
+
+<!-- ============================================================
+     SIDEBAR NAVIGATION
+     ============================================================ -->
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-group">
+        <div class="sidebar-group-title">Getting Started</div>
+        <a href="#overview" class="sidebar-link active">Overview</a>
+        <a href="#prerequisites" class="sidebar-link">Prerequisites</a>
+        <a href="#server-specs" class="sidebar-link">Server Specifications</a>
+    </div>
+    <div class="sidebar-group">
+        <div class="sidebar-group-title">Initial Setup</div>
+        <a href="#provision-vps" class="sidebar-link">1. Provision Hetzner VPS</a>
+        <a href="#configure-dns" class="sidebar-link">2. Configure Cloudflare DNS</a>
+        <a href="#server-setup" class="sidebar-link">3. Server Setup</a>
+        <a href="#clone-repo" class="sidebar-link">4. Clone Repository</a>
+        <a href="#ssl-certificate" class="sidebar-link">5. Generate SSL Certificate</a>
+        <a href="#install-nginx" class="sidebar-link">6. Install Nginx</a>
+        <a href="#env-variables" class="sidebar-link">7. Configure Environment</a>
+    </div>
+    <div class="sidebar-group">
+        <div class="sidebar-group-title">Deployment</div>
+        <a href="#first-deploy" class="sidebar-link">8. First Deploy</a>
+        <a href="#create-admin" class="sidebar-link">9. Create Admin User</a>
+        <a href="#verify" class="sidebar-link">10. Verify Deployment</a>
+    </div>
+    <div class="sidebar-group">
+        <div class="sidebar-group-title">Operations</div>
+        <a href="#updating" class="sidebar-link">Updating the Application</a>
+        <a href="#rollback" class="sidebar-link">Rollback</a>
+        <a href="#commands" class="sidebar-link">Useful Commands</a>
+        <a href="#troubleshooting" class="sidebar-link">Troubleshooting</a>
+    </div>
+    <div class="sidebar-group">
+        <div class="sidebar-group-title">Reference</div>
+        <a href="#architecture" class="sidebar-link">Architecture</a>
+        <a href="#security" class="sidebar-link">Security Checklist</a>
+        <a href="#backup" class="sidebar-link">Backup & Restore</a>
+        <a href="#env-reference" class="sidebar-link">Environment Variables</a>
+    </div>
+</nav>
+
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<main class="main">
+
+<!-- OVERVIEW -->
+<section id="overview">
+    <h1>BOMExplorer VPS Deployment Guide</h1>
+    <p class="subtitle">
+        Complete instructions for provisioning, deploying, and managing the BOMExplorer application on a Hetzner Cloud VPS behind Cloudflare.
+    </p>
+    <p class="last-updated">Last updated: April 20, 2026</p>
+</section>
+
+<!-- PREREQUISITES -->
+<section id="prerequisites">
+    <h2>Prerequisites</h2>
+    <div class="table-wrapper">
+        <table>
+            <thead><tr><th>Requirement</th><th>Details</th></tr></thead>
+            <tbody>
+                <tr><td>Hetzner Cloud Account</td><td><a href="https://hetzner.cloud" target="_blank">hetzner.cloud</a></td></tr>
+                <tr><td>Domain</td><td>Managed by <a href="https://cloudflare.com" target="_blank">Cloudflare</a></td></tr>
+                <tr><td>Local Docker</td><td>For building/pushing images if needed</td></tr>
+                <tr><td>SSH Key</td><td>Registered with Hetzner</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- SERVER SPECS -->
+<section id="server-specs">
+    <h2>Server Specifications</h2>
+    <div class="architecture">
+        <div class="table-wrapper" style="margin:0; border:none;">
+            <table>
+                <thead><tr><th>Field</th><th>Value</th></tr></thead>
+                <tbody>
+                    <tr><td>Provider</td><td>Hetzner Cloud</td></tr>
+                    <tr><td>Server Type</td><td>CX22</td></tr>
+                    <tr><td>CPU</td><td>2 vCPU</td></tr>
+                    <tr><td>RAM</td><td>4 GB</td></tr>
+                    <tr><td>Storage</td><td>40 GB SSD</td></tr>
+                    <tr><td>OS</td><td>Ubuntu 24.04 LTS</td></tr>
+                    <tr><td>Recommended Location</td><td>Nuremberg / Falkenstein / Helsinki</td></tr>
+                    <tr><td>Approximate Cost</td><td>€4–5/month</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- 1. PROVISION VPS -->
+<section id="provision-vps">
+    <h2>1. Provision Hetzner VPS</h2>
+
+    <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+            <h3>Create Server in Hetzner Cloud Console</h3>
+            <ol style="padding-left: 20px; color: var(--color-text-secondary);">
+                <li style="margin-bottom: 10px;">Log in to the <a href="https://console.hetzner.cloud" target="_blank">Hetzner Cloud Console</a></li>
+                <li style="margin-bottom: 10px;">Click <strong>"Create Server"</strong></li>
+                <li style="margin-bottom: 10px;">Select server type <strong>CX22</strong></li>
+                <li style="margin-bottom: 10px;">Choose location (Nuremberg recommended)</li>
+                <li style="margin-bottom: 10px;">Select <strong>Ubuntu 24.04 LTS</strong> as image</li>
+                <li style="margin-bottom: 10px;">Add your SSH public key during creation</li>
+                <li style="margin-bottom: 10px;">Configure Hetzner firewall to allow only ports <code>22</code>, <code>80</code>, <code>443</code></li>
+                <li>Click <strong>"Create & Buy Now"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="alert alert-warning">
+        <div class="alert-title">Important</div>
+        <p>Note the server IP address after creation. You will need it for DNS configuration and SSH access.</p>
+    </div>
+
+    <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+            <h3>Verify SSH Access</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span>Terminal</span>
+                    <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>ssh root@<VPS_IP></code></pre>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 2. CONFIGURE DNS -->
+<section id="configure-dns">
+    <h2>2. Configure Cloudflare DNS</h2>
+
+    <p>In your Cloudflare dashboard for <code>bomexplorer.app</code>, add the following DNS records:</p>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr><th>Type</th><th>Name</th><th>Content</th><th>Proxy Status</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>A</td><td><code>app</code></td><td><code><VPS_IP></code></td><td>Proxied (orange cloud ON)</td></tr>
+                <tr><td>CAA</td><td><code>bomexplorer.app</code></td><td><code>0 issue "letsencrypt.org"</code></td><td>DNS only</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="alert alert-info">
+        <div class="alert-title">SSL/TLS Mode</div>
+        <p>Set Cloudflare SSL mode to <strong>Full (strict)</strong>. With Cloudflare proxying enabled, Cloudflare handles the public SSL certificate. On the VPS you can use a <strong>self-signed</strong> or <strong>Cloudflare Origin CA</strong> certificate.</p>
+    </div>
+</section>
+
+<!-- 3. SERVER SETUP -->
+<section id="server-setup">
+    <h2>3. Server Setup</h2>
+
+    <p>SSH into the VPS and install required software:</p>
+
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — System Setup</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code># SSH as root
+ssh root@<VPS_IP>
+
+# Update system packages
+apt update && apt upgrade -y
+
+# Install Docker
+curl -fsSL https://get.docker.com | sh
+
+# Add ubuntu user to docker group
+usermod -aG docker ubuntu
+systemctl enable docker
+systemctl start docker
+
+# Install Git
+apt install -y git
+
+# Switch to non-root user
+su - ubuntu</code></pre>
+    </div>
+
+    <div class="alert alert-warning">
+        <div class="alert-title">Security Note</div>
+        <p>Avoid running Docker commands as root. Use the <code>ubuntu</code> user for daily operations.</p>
+    </div>
+</section>
+
+<!-- 4. CLONE REPO -->
+<section id="clone-repo">
+    <h2>4. Clone Repository</h2>
+
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Clone Repository</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>cd ~
+git clone git@github.com:futureshocked/bomwise.git
+cd bomwise</code></pre>
+    </div>
+
+    <div class="alert alert-info">
+        <div class="alert-title">Authentication Options</div>
+        <p>Use SSH (<code>git@github.com:...</code>) if you have deploy keys configured, or HTTPS: <code>git clone https://github.com/futureshocked/bomwise.git</code></p>
+    </div>
+</section>
+
+<!-- 5. SSL CERTIFICATE -->
+<section id="ssl-certificate">
+    <h2>5. Generate SSL Certificate</h2>
+
+    <h3>Option A: Self-Signed Certificate</h3>
+    <p>Quick option. Cloudflare validates the certificate internally.</p>
+
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Generate Self-Signed Cert</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>sudo mkdir -p /etc/ssl/certs /etc/ssl/private
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout /etc/ssl/private/bomexplorer.key \
+  -out /etc/ssl/certs/bomexplorer.pem \
+  -subj "/CN=bomexplorer.app" \
+  -addext "subjectAltName=DNS:app.bomexplorer.app"</code></pre>
+    </div>
+
+    <h3>Option B: Cloudflare Origin CA (Recommended)</h3>
+    <p>Provides 15-year validity. Better for long-term deployment.</p>
+
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Install Origin CA Cert</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code># Create directories
+sudo mkdir -p /etc/ssl/certs /etc/ssl/private
+
+# Paste the certificate
+sudo nano /etc/ssl/certs/bomexplorer.pem    # paste Origin cert
+
+# Paste the private key
+sudo nano /etc/ssl/private/bomexplorer.key   # paste Origin key</code></pre>
+    </div>
+
+    <div class="alert alert-info">
+        <div class="alert-title">How to Get Origin CA Certificate</div>
+        <p>Go to Cloudflare dashboard → SSL/TLS → Origin Server → Create Certificate. Add hostnames: <code>bomexplorer.app</code>, <code>*.bomexplorer.app</code>. Download PEM files.</p>
+    </div>
+</section>
+
+<!-- 6. INSTALL NGINX -->
+<section id="install-nginx">
+    <h2>6. Install Nginx Reverse Proxy</h2>
+
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Nginx Setup</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code># Install nginx
+sudo apt install -y nginx
+
+# Copy nginx configuration
+sudo cp nginx/prod.conf /etc/nginx/sites-available/bomexplorer
+
+# Enable site
+sudo ln -s /etc/nginx/sites-available/bomexplorer /etc/nginx/sites-enabled/bomexplorer
+sudo rm -f /etc/nginx/sites-enabled/default
+
+# Test configuration
+sudo nginx -t
+
+# Enable and start nginx
+sudo systemctl enable nginx
+sudo systemctl restart nginx</code></pre>
+    </div>
+
+    <div class="alert alert-success">
+        <div class="alert-title">Verification</div>
+        <p>If <code>sudo nginx -t</code> returns <code>test is successful</code>, the configuration is correct.</p>
+    </div>
+</section>
+
+<!-- 7. ENVIRONMENT VARIABLES -->
+<section id="env-variables">
+    <h2>7. Configure Environment Variables</h2>
+
+    <p>Create the production <code>.env</code> file from the template:</p>
+
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Setup .env</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code># Copy the example file
+cp .env.production.example .env
+
+# Edit with real values
+nano .env</code></pre>
+    </div>
+
+    <p>Generate secure random strings:</p>
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Secret Key</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>openssl rand -hex 64</code></pre>
+    </div>
+
+    <h3>Required Variables Reference</h3>
+    <div class="table-wrapper">
+        <table>
+            <thead><tr><th>Variable</th><th>Description</th><th>Required</th></tr></thead>
+            <tbody>
+                <tr><td><code>SECRET_KEY</code></td><td>Long random string for session signing</td><td>Yes</td></tr>
+                <tr><td><code>POSTGRES_PASSWORD</code></td><td>Database password</td><td>Yes</td></tr>
+                <tr><td><code>OEMSECRETS_API_KEY</code></td><td>OEMSecrets API key</td><td>If using OEMSecrets</td></tr>
+                <tr><td><code>SMTP_PASSWORD</code></td><td>Resend.com API key for email</td><td>Yes (for auth emails)</td></tr>
+                <tr><td><code>EMAIL_FROM</code></td><td>Verified sender email</td><td>Yes</td></tr>
+                <tr><td><code>PADDLE_API_KEY</code></td><td>Paddle billing API key</td><td>Yes (for payments)</td></tr>
+                <tr><td><code>PADDLE_WEBHOOK_SECRET</code></td><td>Paddle webhook secret</td><td>Yes (for webhooks)</td></tr>
+                <tr><td><code>ANTHROPIC_API_KEY</code></td><td>Anthropic API key for AI features</td><td>Optional</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- 8. FIRST DEPLOY -->
+<section id="first-deploy">
+    <h2>8. First Deploy</h2>
+
+    <p>Run the deployment script from the project root:</p>
+
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Deploy</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>cd ~/bomwise
+./scripts/deploy.sh</code></pre>
+    </div>
+
+    <h3>What the Deploy Script Does</h3>
+    <ol style="padding-left: 20px; color: var(--color-text-secondary);">
+        <li style="margin-bottom: 10px;"><strong>Pre-flight checks</strong> — verifies Docker, Git, and <code>.env</code> exist</li>
+        <li style="margin-bottom: 10px;"><strong>Git pull</strong> — fetches latest code from <code>master</code> branch</li>
+        <li style="margin-bottom: 10px;"><strong>Version tag</strong> — creates and pushes git tag from <code>VERSION</code> file</li>
+        <li style="margin-bottom: 10px;"><strong>Docker build</strong> — builds backend and frontend production images</li>
+        <li style="margin-bottom: 10px;"><strong>Container start</strong> — launches all services (postgres, redis, backend, celery-worker, celery-beat, frontend)</li>
+        <li style="margin-bottom: 10px;"><strong>Database migrations</strong> — runs Alembic <code>upgrade head</code></li>
+        <li style="margin-bottom: 10px;"><strong>Cleanup</strong> — prunes old Docker images</li>
+        <li><strong>Health check</strong> — verifies backend responds on <code>/docs</code></li>
+    </ol>
+
+    <div class="alert alert-warning">
+        <div class="alert-title">Ensure .env Exists</div>
+        <p>The deploy script will exit with an error if <code>.env</code> is missing. Complete step 7 before deploying.</p>
+    </div>
+</section>
+
+<!-- 9. CREATE ADMIN -->
+<section id="create-admin">
+    <h2>9. Create Admin User</h2>
+
+    <h3>Option A: Via API (requires existing admin)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Search for User</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>curl -H "Authorization: Bearer <admin-token>" \
+  https://app.bomexplorer.app/api/admin/users?search=email@example.com</code></pre>
+    </div>
+
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Grant Admin</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>curl -X POST -H "Authorization: Bearer <admin-token>" \
+  https://app.bomexplorer.app/api/admin/users/<user_id>/make-admin</code></pre>
+    </div>
+
+    <h3>Option B: Via Script (first admin)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Make Admin via Script</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code># Run inside the backend container
+docker compose -f docker-compose.prod.yml exec backend \
+  uv run python scripts/make_admin.py <your-email@example.com></code></pre>
+    </div>
+
+    <h3>Option C: Via psql (Fallback)</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Direct Database Update</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>docker compose -f docker-compose.prod.yml exec postgres \
+  psql -U bomexplorer -c "UPDATE users SET is_admin = true WHERE email = '<your-email@example.com>';"</code></pre>
+    </div>
+</section>
+
+<!-- 10. VERIFY -->
+<section id="verify">
+    <h2>10. Verify Deployment</h2>
+
+    <div class="table-wrapper">
+        <table>
+            <thead><tr><th>Check</th><th>URL</th><th>Expected</th></tr></thead>
+            <tbody>
+                <tr><td>Frontend</td><td><code>https://app.bomexplorer.app</code></td><td>Application loads</td></tr>
+                <tr><td>API Docs</td><td><code>https://app.bomexplorer.app/api/docs</code></td><td>Swagger UI</td></tr>
+                <tr><td>Version</td><td><code>https://app.bomexplorer.app/api/version</code></td><td>JSON with version</td></tr>
+                <tr><td>Health</td><td><code>https://app.bomexplorer.app/api/health</code></td><td>Healthy status</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- UPDATING -->
+<section id="updating">
+    <h2>Updating the Application</h2>
+
+    <h3>On Your Development Machine</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Development</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code># Bump version (recommended)
+./scripts/bump-version.sh patch  # or: minor, major
+
+# Push to GitHub
+git push origin master --tags</code></pre>
+    </div>
+
+    <h3>On the VPS</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — VPS Update</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>cd ~/bomwise
+./scripts/deploy.sh</code></pre>
+    </div>
+
+    <div class="alert alert-success">
+        <div class="alert-title">Zero Configuration Needed</div>
+        <p>The deploy script handles everything: pull code, rebuild images, restart containers, and run migrations.</p>
+    </div>
+</section>
+
+<!-- ROLLBACK -->
+<section id="rollback">
+    <h2>Rollback</h2>
+
+    <p>If a deployment causes issues, you can quickly revert to a previous version:</p>
+
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Rollback Steps</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>cd ~/bomwise
+
+# List available versions
+git tag -l
+
+# Checkout previous version
+git checkout v1.0.0
+
+# Rebuild and restart containers
+docker compose -f docker-compose.prod.yml up -d --build
+
+# If DB migration was involved, downgrade:
+docker compose -f docker-compose.prod.yml exec backend \
+  uv run alembic downgrade -1</code></pre>
+    </div>
+
+    <div class="alert alert-danger">
+        <div class="alert-title">Warning</div>
+        <p>Rolling back database migrations can cause data loss. Always create a backup before downgrading.</p>
+    </div>
+</section>
+
+<!-- USEFUL COMMANDS -->
+<section id="commands">
+    <h2>Useful Commands</h2>
+
+    <div class="table-wrapper">
+        <table>
+            <thead><tr><th>Command</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td><code>docker compose -f docker-compose.prod.yml ps</code></td><td>List running containers</td></tr>
+                <tr><td><code>docker compose -f docker-compose.prod.yml logs -f backend</code></td><td>Tail backend logs</td></tr>
+                <tr><td><code>docker compose -f docker-compose.prod.yml logs -f celery-worker</code></td><td>Tail worker logs</td></tr>
+                <tr><td><code>docker compose -f docker-compose.prod.yml exec backend bash</code></td><td>Shell into backend container</td></tr>
+                <tr><td><code>docker compose -f docker-compose.prod.yml exec postgres psql -U bomexplorer</code></td><td>Access database shell</td></tr>
+                <tr><td><code>docker compose -f docker-compose.prod.yml exec backend uv run alembic current</code></td><td>Check current Alembic migration</td></tr>
+                <tr><td><code>df -h /var/lib/docker</code></td><td>Check Docker disk usage</td></tr>
+                <tr><td><code>docker system prune -f</code></td><td>Clean up unused images</td></tr>
+                <tr><td><code>sudo nginx -t</code></td><td>Test nginx configuration</td></tr>
+                <tr><td><code>sudo systemctl restart nginx</code></td><td>Restart nginx service</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- TROUBLESHOOTING -->
+<section id="troubleshooting">
+    <h2>Troubleshooting</h2>
+
+    <h3>Backend Won't Start</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Check Backend Logs</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>docker compose -f docker-compose.prod.yml logs backend</code></pre>
+    </div>
+    <p>Common causes: missing <code>.env</code> variable, database not reachable, migration failed.</p>
+
+    <h3>Celery Worker Not Processing Tasks</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Check Worker & Redis</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code># Check worker logs
+docker compose -f docker-compose.prod.yml logs celery-worker
+
+# Verify Redis is running
+docker compose -f docker-compose.prod.yml exec redis redis-cli ping</code></pre>
+    </div>
+
+    <h3>Nginx 502 Bad Gateway</h3>
+    <ul style="padding-left: 20px; color: var(--color-text-secondary);">
+        <li style="margin-bottom: 8px;">Backend container not running → <code>docker compose -f docker-compose.prod.yml ps</code></li>
+        <li style="margin-bottom: 8px;">Nginx config wrong → <code>sudo nginx -t</code></li>
+        <li style="margin-bottom: 8px;">SSL cert issue → verify <code>/etc/ssl/certs/bomexplorer.pem</code> and key exist</li>
+    </ul>
+
+    <h3>Database Migration Fails</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Fix Migrations</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code># Check current migration
+docker compose -f docker-compose.prod.yml exec backend uv run alembic current
+
+# Retry migration
+docker compose -f docker-compose.prod.yml exec backend uv run alembic upgrade head</code></pre>
+    </div>
+
+    <h3>Admin Script Can't Find App Module</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Use psql Directly</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>docker compose -f docker-compose.prod.yml exec postgres psql -U bomexplorer \
+  -c "UPDATE users SET is_admin = true WHERE email = 'user@example.com';"</code></pre>
+    </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+    <h2>Architecture</h2>
+
+    <div class="architecture">
+        <div class="arch-node"><span class="arrow">→</span> Internet</div>
+        <div class="arch-level">
+            <div class="arch-node"><span class="arrow">→</span> Cloudflare (DNS + SSL Proxy)</div>
+        </div>
+        <div class="arch-level">
+            <div class="arch-node"><span class="arrow">→</span> Hetzner VPS (91.98.119.88)</div>
+        </div>
+        <div class="arch-level">
+            <div class="arch-node"><span class="arrow">→</span> Nginx (port 443 reverse proxy)</div>
+        </div>
+        <div class="arch-level">
+            <div class="arch-level">
+                <div class="arch-node"><span class="arrow">→</span> Frontend (Docker, port 3000 → static files)</div>
+            </div>
+            <div class="arch-level">
+                <div class="arch-node"><span class="arrow">→</span> Backend API (Docker, FastAPI port 8000)</div>
+            </div>
+            <div class="arch-level">
+                <div class="arch-node"><span class="arrow">→</span> PostgreSQL (Docker volume — persistent data)</div>
+                <div class="arch-node"><span class="arrow">→</span> Redis (Docker volume — caching & Celery broker)</div>
+                <div class="arch-node"><span class="arrow">→</span> Celery Worker (background task processing)</div>
+                <div class="arch-node"><span class="arrow">→</span> Celery Beat (scheduled task runner)</div>
+            </div>
+        </div>
+    </div>
+
+    <h3>Production Services</h3>
+    <div class="table-wrapper">
+        <table>
+            <thead><tr><th>Service</th><th>Port</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td><code>postgres</code></td><td>5432 (internal)</td><td>PostgreSQL 16 database</td></tr>
+                <tr><td><code>redis</code></td><td>6379 (internal)</td><td>Redis cache & broker</td></tr>
+                <tr><td><code>backend</code></td><td>8000</td><td>FastAPI application server</td></tr>
+                <tr><td><code>celery-worker</code></td><td>—</td><td>Background task processor</td></tr>
+                <tr><td><code>celery-beat</code></td><td>—</td><td>Task scheduler</td></tr>
+                <tr><td><code>frontend</code></td><td>3000</td><td>React static files (nginx)</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- SECURITY -->
+<section id="security">
+    <h2>Security Checklist</h2>
+
+    <ul class="checklist">
+        <li><span class="check checked">✓</span> <span>Cloudflare proxy enabled (orange cloud on DNS record)</span></li>
+        <li><span class="check checked">✓</span> <span>SSL certificate installed (self-signed or Origin CA)</span></li>
+        <li><span class="check checked">✓</span> <span><code>.env</code> file has strong <code>SECRET_KEY</code> and <code>POSTGRES_PASSWORD</code></span></li>
+        <li><span class="check checked">✓</span> <span>Only port 80/443 open to internet (Hetzner firewall)</span></li>
+        <li><span class="check checked">✓</span> <span>PostgreSQL and Redis NOT exposed to public IP</span></li>
+        <li><span class="check checked">✓</span> <span>CORS configured for <code>https://app.bomexplorer.app</code> only (production mode)</span></li>
+        <li><span class="check unchecked">—</span> <span>Rate limiting on auth endpoints (built into FastAPI config)</span></li>
+        <li><span class="check unchecked">—</span> <span>Paddle webhook signature verification active</span></li>
+        <li><span class="check unchecked">—</span> <span>Regular backups configured (Hetzner snapshots or manual pg_dump)</span></li>
+    </ul>
+</section>
+
+<!-- BACKUP -->
+<section id="backup">
+    <h2>Backup & Restore</h2>
+
+    <h3>Database Backup</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Backup Database</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code>docker compose -f docker-compose.prod.yml exec postgres \
+  pg_dump -U bomexplorer -Fc bomexplorer > bomwise_$(date +%Y%m%d).dump
+
+# Copy to safe location
+scp bomwise_$(date +%Y%m%d).dump user@backup-server:/backups/</code></pre>
+    </div>
+
+    <h3>Restore from Backup</h3>
+    <div class="code-block">
+        <div class="code-header">
+            <span>Terminal — Restore Database</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code># Transfer dump file to VPS
+scp user@backup-server:/backups/bomwise_20250101.dump .
+
+# Restore
+docker compose -f docker-compose.prod.yml exec -T postgres \
+  pg_restore -U bomexplorer -d bomexplorer --clean < bomwise_20250101.dump</code></pre>
+    </div>
+
+    <div class="alert alert-danger">
+        <div class="alert-title">Danger</div>
+        <p>The <code>--clean</code> flag drops existing objects before restoring. Ensure you want to overwrite the current database.</p>
+    </div>
+
+    <h3>Automated Backups (Recommended)</h3>
+    <p>Set up a cron job on the VPS for regular backups:</p>
+    <div class="code-block">
+        <div class="code-header">
+            <span>Crontab — Daily Backup at 2AM</span>
+            <button class="code-copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code># Add to crontab: crontab -e
+0 2 * * * cd /home/ubuntu/bomwise && docker compose -f docker-compose.prod.yml exec postgres pg_dump -U bomexplorer -Fc bomexplorer > /home/ubuntu/backups/bomwise_$(date +\%Y\%m\%d).dump && find /home/ubuntu/backups -name "bomwise_*.dump" -mtime +7 -delete</code></pre>
+    </div>
+    <p>This keeps the last 7 days of backups and auto-rotates.</p>
+</section>
+
+<!-- ENV REFERENCE -->
+<section id="env-reference">
+    <h2>Environment Variables Reference</h2>
+
+    <p>Complete reference for all variables in <code>.env.production.example</code>:</p>
+
+    <h3>Application</h3>
+    <div class="table-wrapper">
+        <table>
+            <thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td><code>ENVIRONMENT</code></td><td><code>production</code></td><td>Runtime environment</td></tr>
+                <tr><td><code>SECRET_KEY</code></td><td><em>required</em></td><td>Session signing key (generate with <code>openssl rand -hex 64</code>)</td></tr>
+                <tr><td><code>APP_BASE_URL</code></td><td><code>https://app.bomexplorer.app</code></td><td>Base URL of the application</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Database</h3>
+    <div class="table-wrapper">
+        <table>
+            <thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td><code>POSTGRES_USER</code></td><td><code>bomexplorer</code></td><td>Database username</td></tr>
+                <tr><td><code>POSTGRES_PASSWORD</code></td><td><em>required</em></td><td>Database password (use strong password)</td></tr>
+                <tr><td><code>POSTGRES_DB</code></td><td><code>bomexplorer</code></td><td>Database name</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Component Data Providers</h3>
+    <div class="table-wrapper">
+        <table>
+            <thead><tr><th>Variable</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td><code>COMPONENT_PROVIDER</code></td><td>Primary provider (e.g., <code>oemsecrets</code>)</td></tr>
+                <tr><td><code>PROVIDER_FALLBACK_ORDER</code></td><td>Comma-separated fallback chain</td></tr>
+                <tr><td><code>OEMSECRETS_API_KEY</code></td><td>OEMSecrets API key</td></tr>
+                <tr><td><code>NEXAR_CLIENT_ID</code></td><td>Nexar client ID</td></tr>
+                <tr><td><code>NEXAR_CLIENT_SECRET</code></td><td>Nexar client secret</td></tr>
+                <tr><td><code>DIGIKEY_CLIENT_ID</code></td><td>DigiKey OAuth client ID</td></tr>
+                <tr><td><code>DIGIKEY_CLIENT_SECRET</code></td><td>DigiKey OAuth client secret</td></tr>
+                <tr><td><code>MOUSER_API_KEY</code></td><td>Mouser API key</td></tr>
+                <tr><td><code>NEXTPCB_APP_ID</code></td><td>NextPCB app ID</td></tr>
+                <tr><td><code>NEXTPCB_APP_SECRET</code></td><td>NextPCB app secret</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Freemium Limits</h3>
+    <div class="table-wrapper">
+        <table>
+            <thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td><code>FREE_PLAN_MAX_PROJECTS</code></td><td><code>3</code></td><td>Max projects for free users</td></tr>
+                <tr><td><code>FREE_PLAN_MAX_PARTS_PER_PROJECT</code></td><td><code>50</code></td><td>Max parts per project for free users</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Email (SMTP)</h3>
+    <div class="table-wrapper">
+        <table>
+            <thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td><code>SMTP_HOST</code></td><td><code>smtp.resend.com</code></td><td>SMTP server hostname</td></tr>
+                <tr><td><code>SMTP_PORT</code></td><td><code>465</code></td><td>SMTP port (465 = TLS, 587 = STARTTLS)</td></tr>
+                <tr><td><code>SMTP_USER</code></td><td><code>resend</code></td><td>SMTP username</td></tr>
+                <tr><td><code>SMTP_PASSWORD</code></td><td><em>required</em></td><td>SMTP password / Resend API key</td></tr>
+                <tr><td><code>EMAIL_FROM</code></td><td><em>required</em></td><td>Sender email address</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Paddle Billing</h3>
+    <div class="table-wrapper">
+        <table>
+            <thead><tr><th>Variable</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td><code>PADDLE_API_KEY</code></td><td>Paddle API key</td></tr>
+                <tr><td><code>PADDLE_WEBHOOK_SECRET</code></td><td>Paddle webhook signing secret</td></tr>
+                <tr><td><code>PADDLE_PRICE_ID_PRO_MONTHLY</code></td><td>Pro plan monthly price ID in Paddle</td></tr>
+                <tr><td><code>PADDLE_ENVIRONMENT</code></td><td><code>sandbox</code> or <code>production</code></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>AI Features</h3>
+    <div class="table-wrapper">
+        <table>
+            <thead><tr><th>Variable</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td><code>ANTHROPIC_API_KEY</code></td><td>Anthropic API key (for NL BOM query matching)</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+
+    function setTheme(theme) {
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Load saved theme or default to light
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const current = html.getAttribute('data-theme');
+        setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+
+    menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+    });
+
+    // Close sidebar when clicking a link on mobile
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 1024) {
+                sidebar.classList.remove('open');
+            }
+        });
+    });
+
+    // Close sidebar on outside click
+    document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 1024 &&
+            !sidebar.contains(e.target) &&
+            !menuToggle.contains(e.target)) {
+            sidebar.classList.remove('open');
+        }
+    });
+
+    // Active sidebar link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+
+    function updateActiveLink() {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            if (window.scrollY >= sectionTop) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        sidebarLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        sections.forEach(section => {
+            const text = section.textContent.toLowerCase();
+            if (query && !text.includes(query)) {
+                section.style.display = 'none';
+            } else {
+                section.style.display = '';
+            }
+        });
+    });
+
+    // Copy code function
+    function copyCode(button) {
+        const codeBlock = button.closest('.code-block');
+        const code = codeBlock.querySelector('code').textContent;
+
+        navigator.clipboard.writeText(code).then(() => {
+            button.textContent = 'Copied!';
+            button.classList.add('copied');
+            setTimeout(() => {
+                button.textContent = 'Copy';
+                button.classList.remove('copied');
+            }, 2000);
+        }).catch(() => {
+            // Fallback for browsers without clipboard API
+            const textarea = document.createElement('textarea');
+            textarea.value = code;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            button.textContent = 'Copied!';
+            button.classList.add('copied');
+            setTimeout(() => {
+                button.textContent = 'Copy';
+                button.classList.remove('copied');
+            }, 2000);
+        });
+    }
+</script>
+
+</body>
+</html>

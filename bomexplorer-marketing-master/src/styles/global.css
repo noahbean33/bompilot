@@ -1,0 +1,61 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+:root {
+  --color-bg: #0d1117;
+  --color-surface: #161b22;
+  --color-surface-2: #1c2130;
+  --color-primary: #3b82f6;
+  --color-primary-dim: #1e3a5f;
+  --color-secondary: #00d4aa;
+  --color-secondary-dim: #003d30;
+  --color-text: #e6edf3;
+  --color-text-muted: #8b949e;
+  --color-border: #21262d;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3);
+  --shadow-glow-blue: 0 0 0 1px var(--color-primary), 0 4px 24px rgba(59,130,246,0.15);
+  --shadow-glow-teal: 0 0 0 1px var(--color-secondary), 0 4px 24px rgba(0,212,170,0.12);
+
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Mono', monospace;
+}
+
+::selection {
+  background: var(--color-primary-dim);
+  color: var(--color-text);
+}
+
+a {
+  transition: color 0.15s ease;
+}
+
+.bg-grid {
+  background-image: radial-gradient(circle, var(--color-border) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.border-gradient {
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}

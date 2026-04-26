@@ -1,0 +1,261 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+---
+
+<MarketingLayout title="Why BOMexplorer - 5 Reasons to Switch" currentPage="why">
+	<!-- Hero -->
+	<section class="py-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto">
+			<div class="text-center mb-16">
+				<span class="text-xs font-mono text-[var(--color-secondary)] uppercase tracking-widest border border-[var(--color-secondary)]/30 rounded-full px-3 py-1">[ WHY BOMEXPLORER ]</span>
+				<h1 class="text-5xl font-bold text-[var(--color-text)] mt-6 mb-6 font-mono">
+					5 reasons hardware engineers choose us
+				</h1>
+				<p class="text-xl text-[var(--color-text-muted)] max-w-3xl mx-auto leading-relaxed">
+					BOMexplorer isn't just another BOM tool. It's the only platform that combines multi-provider aggregation, AI-powered matching, and supply chain monitoring in one workflow.
+				</p>
+			</div>
+
+			<!-- Differentiator 1: Multi-Provider Aggregation -->
+			<div class="mb-24">
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<div>
+						<div class="mb-4 flex items-center gap-3">
+							<span class="text-[var(--color-secondary)] text-sm font-mono font-bold tracking-widest">[ 01 ]</span>
+							<span class="bg-[var(--color-secondary)]/10 text-[var(--color-secondary)] text-xs font-semibold px-2 py-1 rounded">Unique Capability</span>
+						</div>
+						<h2 class="text-3xl font-bold text-[var(--color-text)] mb-6 font-mono">6 providers. One search.</h2>
+						<p class="text-[var(--color-text-muted)] leading-relaxed mb-6">
+							While other tools query a single distributor, BOMexplorer searches Nexar, OEMSecrets, DigiKey, Mouser, FindChips, and NextPCB simultaneously — or uses a smart fallback chain if one returns no results.
+						</p>
+						<div class="space-y-3">
+							<div class="flex items-start gap-3">
+								<span class="text-[var(--color-secondary)] mt-1">✓</span>
+								<div>
+									<h4 class="text-[var(--color-text)] font-semibold text-sm">Automatic fallback</h4>
+									<p class="text-[var(--color-text-muted)] text-sm">If one provider has no results, the next is tried automatically.</p>
+								</div>
+							</div>
+							<div class="flex items-start gap-3">
+								<span class="text-[var(--color-secondary)] mt-1">✓</span>
+								<div>
+									<h4 class="text-[var(--color-text)] font-semibold text-sm">Configurable provider order</h4>
+									<p class="text-[var(--color-text-muted)] text-sm">Admins can set the provider sequence based on pricing preference.</p>
+								</div>
+							</div>
+							<div class="flex items-start gap-3">
+								<span class="text-[var(--color-secondary)] mt-1">✓</span>
+								<div>
+									<h4 class="text-[var(--color-text)] font-semibold text-sm">Source badge per row</h4>
+									<p class="text-[var(--color-text-muted)] text-sm">Every BOM line shows exactly which provider supplied the match.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6 shadow-[var(--shadow-card)]">
+						<img src="https://imagedelivery.net/EzErua5FfjxwIvZXiki_dA/400e87d5-9257-426a-34ca-16d53c077100/1920" alt="BOM table with multi-provider source badges" class="w-full h-auto rounded" />
+					</div>
+				</div>
+			</div>
+
+			<!-- Differentiator 2: AI-Powered Matching -->
+			<div class="mb-24 bg-[var(--color-surface)] py-16 px-8 rounded-lg shadow-[var(--shadow-card)]">
+				<div class="max-w-7xl mx-auto">
+					<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+						<div class="order-2 lg:order-2">
+							<div class="mb-4 flex items-center gap-3">
+								<span class="text-[var(--color-secondary)] text-sm font-mono font-bold tracking-widest">[ 02 ]</span>
+								<span class="bg-[var(--color-secondary)]/10 text-[var(--color-secondary)] text-xs font-semibold px-2 py-1 rounded">AI-Powered</span>
+							</div>
+							<h2 class="text-3xl font-bold text-[var(--color-text)] mb-6 font-mono">AI that understands KiCad quirks</h2>
+							<p class="text-[var(--color-text-muted)] leading-relaxed mb-6">
+								BOMexplorer uses Claude AI to classify components that traditional matching can't handle — crystal symbols, fiducials, mounting holes, and copper-only net ties. It generates targeted queries specific to each provider's API.
+							</p>
+							<div class="space-y-3">
+								<div class="flex items-start gap-3">
+									<span class="text-[var(--color-secondary)] mt-1">✓</span>
+									<div>
+										<h4 class="text-[var(--color-text)] font-semibold text-sm">Hierarchical matching</h4>
+										<p class="text-[var(--color-text-muted)] text-sm">Exact MPN → hyphen-stripped MPN → distributor part number → keyword search.</p>
+									</div>
+								</div>
+								<div class="flex items-start gap-3">
+									<span class="text-[var(--color-secondary)] mt-1">✓</span>
+									<div>
+										<h4 class="text-[var(--color-text)] font-semibold text-sm">Smart skip list</h4>
+										<p class="text-[var(--color-text-muted)] text-sm">Auto-skips unmatchable values (TestPoint, LED, Fiducial) unless an explicit MPN is provided.</p>
+									</div>
+								</div>
+								<div class="flex items-start gap-3">
+									<span class="text-[var(--color-secondary)] mt-1">✓</span>
+									<div>
+										<h4 class="text-[var(--color-text)] font-semibold text-sm">Confidence badges</h4>
+										<p class="text-[var(--color-text-muted)] text-sm">Visual indicators: exact MPN, parametric, keyword, AI-suggested, unmatched.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-1 lg:order-1">
+							<img src="https://imagedelivery.net/EzErua5FfjxwIvZXiki_dA/51db84a7-553b-4e02-20e1-4781cd68db00/1024pxwide" alt="AI-powered matching with confidence badges for KiCad components" class="w-full h-auto rounded" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Differentiator 3: Supply Chain Monitoring -->
+			<div class="mb-24">
+				<div class="max-w-7xl mx-auto">
+					<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+						<div>
+							<div class="mb-4 flex items-center gap-3">
+								<span class="text-[var(--color-secondary)] text-sm font-mono font-bold tracking-widest">[ 03 ]</span>
+								<span class="bg-[var(--color-secondary)]/10 text-[var(--color-secondary)] text-xs font-semibold px-2 py-1 rounded">Continuous Monitoring</span>
+							</div>
+							<h2 class="text-3xl font-bold text-[var(--color-text)] mb-6 font-mono">Overnight supply chain alerts</h2>
+							<p class="text-[var(--color-text-muted)] leading-relaxed mb-6">
+								Set your BOM and forget it. BOMexplorer runs overnight re-queries on all active BOM lines, detecting price changes, stock drops, end-of-life notices, and lead time increases before they derail your production run.
+							</p>
+							<div class="space-y-3">
+								<div class="flex items-start gap-3">
+									<span class="text-[var(--color-secondary)] mt-1">✓</span>
+									<div>
+										<h4 class="text-[var(--color-text)] font-semibold text-sm">Flag detection</h4>
+										<p class="text-[var(--color-text-muted)] text-sm">Out-of-stock, low-stock, price spikes, EOL, lead-time increases.</p>
+									</div>
+								</div>
+								<div class="flex items-start gap-3">
+									<span class="text-[var(--color-secondary)] mt-1">✓</span>
+									<div>
+										<h4 class="text-[var(--color-text)] font-semibold text-sm">Alert lifecycle</h4>
+										<p class="text-[var(--color-text-muted)] text-sm">Open → Watching → Ignored → Resolved with snooze support.</p>
+									</div>
+								</div>
+								<div class="flex items-start gap-3">
+									<span class="text-[var(--color-secondary)] mt-1">✓</span>
+									<div>
+										<h4 class="text-[var(--color-text)] font-semibold text-sm">Morning email digest</h4>
+										<p class="text-[var(--color-text-muted)] text-sm">Daily summary email of new flags so you start the day informed.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6 shadow-[var(--shadow-card)]">
+								<div class="bg-amber-500/5 rounded border-2 border-amber-500/40 min-h-[280px] flex flex-col items-center justify-center p-8 text-center">
+									<svg class="w-12 h-12 text-amber-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+									</svg>
+									<span class="text-amber-400 text-sm font-mono font-semibold mb-2">UNDER DEVELOPMENT</span>
+									<p class="text-[var(--color-text-muted)] text-xs">Overnight supply chain alerts coming soon — automated re-queries, price spike detection, and email digests.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Differentiator 4: Natural Language Query -->
+			<div class="mb-24 bg-[var(--color-surface)] py-16 px-8 rounded-lg shadow-[var(--shadow-card)]">
+				<div class="max-w-7xl mx-auto">
+					<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+						<div class="order-2 lg:order-2">
+							<div class="mb-4 flex items-center gap-3">
+								<span class="text-[var(--color-secondary)] text-sm font-mono font-bold tracking-widest">[ 04 ]</span>
+								<span class="bg-[var(--color-secondary)]/10 text-[var(--color-secondary)] text-xs font-semibold px-2 py-1 rounded">AI Assist</span>
+							</div>
+							<h2 class="text-3xl font-bold text-[var(--color-text)] mb-6 font-mono">Talk to your BOM in plain English</h2>
+							<p class="text-[var(--color-text-muted)] leading-relaxed mb-6">
+								Need to find all capacitors under $0.10? Or surface-mount resistors with low stock? Just type it. BOMexplorer's AI Assist understands natural language queries and highlights matching rows in real-time — a rare UX feature in BOM management tools.
+							</p>
+							<div class="space-y-3">
+								<div class="flex items-start gap-3">
+									<span class="text-[var(--color-secondary)] mt-1">✓</span>
+									<div>
+										<h4 class="text-[var(--color-text)] font-semibold text-sm">Powered by Claude Haiku</h4>
+										<p class="text-[var(--color-text-muted)] text-sm">Fast, cost-effective AI for responsive BOM filtering.</p>
+									</div>
+								</div>
+								<div class="flex items-start gap-3">
+									<span class="text-[var(--color-secondary)] mt-1">✓</span>
+									<div>
+										<h4 class="text-[var(--color-text)] font-semibold text-sm">Debounced input</h4>
+										<p class="text-[var(--color-text-muted)] text-sm">Real-time highlighting as you type without lag.</p>
+									</div>
+								</div>
+								<div class="flex items-start gap-3">
+									<span class="text-[var(--color-secondary)] mt-1">✓</span>
+									<div>
+										<h4 class="text-[var(--color-text)] font-semibold text-sm">Amber row highlighting</h4>
+										<p class="text-[var(--color-text-muted)] text-sm">Matching rows are visually highlighted for instant recognition.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-1 lg:order-1">
+							<img src="https://imagedelivery.net/EzErua5FfjxwIvZXiki_dA/0ace1188-147d-48f7-ab73-24a6c37bfc00/1920" alt="Natural language BOM query with highlighted matching rows" class="w-full h-auto rounded" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Differentiator 5: Substitution Management -->
+			<div class="mb-24">
+				<div class="max-w-7xl mx-auto">
+					<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+						<div>
+							<div class="mb-4 flex items-center gap-3">
+								<span class="text-[var(--color-secondary)] text-sm font-mono font-bold tracking-widest">[ 05 ]</span>
+								<span class="bg-[var(--color-secondary)]/10 text-[var(--color-secondary)] text-xs font-semibold px-2 py-1 rounded">Workflow</span>
+							</div>
+							<h2 class="text-3xl font-bold text-[var(--color-text)] mb-6 font-mono">One-click swaps with full history</h2>
+							<p class="text-[var(--color-text-muted)] leading-relaxed mb-6">
+								When a part goes out of stock or you find a better price, BOMexplorer makes substitution effortless. View ranked alternatives, swap with one click, and maintain a full audit trail of every change.
+							</p>
+							<div class="space-y-3">
+								<div class="flex items-start gap-3">
+									<span class="text-[var(--color-secondary)] mt-1">✓</span>
+									<div>
+										<h4 class="text-[var(--color-text)] font-semibold text-sm">Ranked alternatives</h4>
+										<p class="text-[var(--color-text-muted)] text-sm">All candidate parts shown with pricing, stock, and distributor info.</p>
+									</div>
+								</div>
+								<div class="flex items-start gap-3">
+									<span class="text-[var(--color-secondary)] mt-1">✓</span>
+									<div>
+										<h4 class="text-[var(--color-text)] font-semibold text-sm">Confirmation dialog</h4>
+										<p class="text-[var(--color-text-muted)] text-sm">One-click swap with confirmation to prevent accidental changes.</p>
+									</div>
+								</div>
+								<div class="flex items-start gap-3">
+									<span class="text-[var(--color-secondary)] mt-1">✓</span>
+									<div>
+										<h4 class="text-[var(--color-text)] font-semibold text-sm">Substitution timeline</h4>
+										<p class="text-[var(--color-text-muted)] text-sm">Collapsible history showing all swaps with MPN, timestamps, and reason.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<img src="https://imagedelivery.net/EzErua5FfjxwIvZXiki_dA/cabd3cc2-6bdf-4030-5bca-a2ebb8783a00/1920" alt="One-click part substitution with full audit history" class="w-full h-auto rounded" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- CTA -->
+			<div class="text-center pt-8 border-t border-[var(--color-border)]">
+				<h2 class="text-3xl font-bold text-[var(--color-text)] mb-4 font-mono">Ready to stop manual BOM sourcing?</h2>
+				<p class="text-[var(--color-text-muted)] mb-8">Join hardware engineers who've already made the switch.</p>
+				<div class="flex flex-col sm:flex-row gap-4 justify-center">
+					<a href="/contact" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-md font-semibold hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-200">
+						Get Early Access
+					</a>
+					<a href="/features" class="border border-[var(--color-border)] text-[var(--color-text)] px-8 py-3 rounded-md font-semibold hover:border-[var(--color-secondary)] hover:shadow-[var(--shadow-glow-teal)] transition-all duration-200">
+						See All Features
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</MarketingLayout>

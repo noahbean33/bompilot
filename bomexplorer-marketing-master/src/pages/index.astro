@@ -1,0 +1,275 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+---
+
+<MarketingLayout title="BOMexplorer - Compare pricing and stock across 6 distributors" currentPage="home">
+	<!-- Hero Section -->
+	<section class="py-24 px-4 sm:px-6 lg:px-8 relative bg-grid overflow-hidden">
+		<!-- Gradient overlay -->
+		<div class="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-transparent pointer-events-none"></div>
+		
+		<div class="max-w-7xl mx-auto relative z-10">
+			<div class="text-center mb-20">
+				<h1 class="text-7xl md:text-8xl font-bold text-[var(--color-text)] mb-8 font-mono leading-none">
+					Compare pricing and stock across 6 distributors at once
+				</h1>
+				<p class="text-xl text-[var(--color-text-muted)] mb-10 max-w-3xl mx-auto leading-relaxed">
+					BOMexplorer searches 6 providers simultaneously — Mouser, DigiKey, Nexar, OEMSecrets, FindChips, and NextPCB — matching every component with live pricing, stock levels, and supply chain alerts.
+				</p>
+				<div class="flex flex-col sm:flex-row gap-4 justify-center">
+					<a href="/contact" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-md font-semibold hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-200">
+						Get Early Access
+					</a>
+					<a href="/features" class="border border-[var(--color-border)] text-[var(--color-text)] px-8 py-3 rounded-md font-semibold hover:border-[var(--color-secondary)] hover:shadow-[var(--shadow-glow-teal)] transition-all duration-200">
+						See the Features
+					</a>
+				</div>
+			</div>
+
+			<!-- Hero Visual -->
+			<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg shadow-[var(--shadow-glow-blue)] max-w-4xl mx-auto overflow-hidden">
+				<!-- Window chrome -->
+				<div class="bg-[var(--color-surface-2)] px-4 py-3 border-b border-[var(--color-border)] flex items-center justify-between">
+					<div class="flex items-center gap-2">
+						<div class="w-3 h-3 rounded-full bg-red-500"></div>
+						<div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+						<div class="w-3 h-3 rounded-full bg-green-500"></div>
+					</div>
+					<span class="text-xs text-[var(--color-text-muted)] font-mono">BOMexplorer — project.csv</span>
+					<div class="w-12"></div>
+				</div>
+				
+				<!-- Table -->
+				<div class="p-6 space-y-0.5">
+					<!-- Headers -->
+					<div class="grid grid-cols-6 gap-4 pb-4 border-b border-[var(--color-border)] mb-2">
+						<div class="text-xs font-mono text-[var(--color-text-muted)] uppercase tracking-wider">Reference</div>
+						<div class="text-xs font-mono text-[var(--color-text-muted)] uppercase tracking-wider">Match</div>
+						<div class="text-xs font-mono text-[var(--color-text-muted)] uppercase tracking-wider">Stock</div>
+						<div class="text-xs font-mono text-[var(--color-text-muted)] uppercase tracking-wider">Price</div>
+						<div class="text-xs font-mono text-[var(--color-text-muted)] uppercase tracking-wider">Provider</div>
+						<div class="text-xs font-mono text-[var(--color-text-muted)] uppercase tracking-wider">Confidence</div>
+					</div>
+					
+					<!-- Rows -->
+					<div class="grid grid-cols-6 gap-4 py-3 border-b border-[var(--color-border)]/50">
+						<div class="text-sm text-[var(--color-text)] font-mono">STM32F405RGT6</div>
+						<div class="flex items-center gap-2">
+							<span class="bg-[var(--color-secondary)] text-[var(--color-bg)] px-2 py-0.5 rounded text-xs font-semibold">Exact</span>
+						</div>
+						<div class="text-sm text-[var(--color-secondary)] font-mono">1,247</div>
+						<div class="text-sm text-[var(--color-primary)] font-semibold font-mono">$4.25</div>
+						<div class="text-xs bg-blue-500/10 text-blue-300 px-2 py-1 rounded w-fit font-mono">Mouser</div>
+						<div class="text-xs bg-green-500/10 text-green-300 px-2 py-1 rounded w-fit font-mono">98%</div>
+					</div>
+					
+					<div class="grid grid-cols-6 gap-4 py-3 border-b border-[var(--color-border)]/50">
+						<div class="text-sm text-[var(--color-text)] font-mono">LM358N</div>
+						<div class="flex items-center gap-2">
+							<span class="bg-[var(--color-secondary)] text-[var(--color-bg)] px-2 py-0.5 rounded text-xs font-semibold">Parametric</span>
+						</div>
+						<div class="text-sm text-[var(--color-secondary)] font-mono">892</div>
+						<div class="text-sm text-[var(--color-primary)] font-semibold font-mono">$0.47</div>
+						<div class="text-xs bg-red-500/10 text-red-300 px-2 py-1 rounded w-fit font-mono">DigiKey</div>
+						<div class="text-xs bg-green-500/10 text-green-300 px-2 py-1 rounded w-fit font-mono">95%</div>
+					</div>
+					
+					<div class="grid grid-cols-6 gap-4 py-3">
+						<div class="text-sm text-[var(--color-text)] font-mono">ESP32-WROOM-32</div>
+						<div class="flex items-center gap-2">
+							<span class="bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded text-xs font-semibold">AI</span>
+						</div>
+						<div class="text-sm text-[var(--color-warning)] font-mono">47</div>
+						<div class="text-sm text-[var(--color-primary)] font-semibold font-mono">$3.89</div>
+						<div class="text-xs bg-amber-500/10 text-amber-300 px-2 py-1 rounded w-fit font-mono">Nexar</div>
+						<div class="text-xs bg-amber-500/10 text-amber-300 px-2 py-1 rounded w-fit font-mono">87%</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Problem Section -->
+	<section class="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+		<!-- Subtle gradient background -->
+		<div class="absolute inset-0 bg-gradient-to-b from-[var(--color-surface)] via-[var(--color-surface)]/50 to-[var(--color-bg)] pointer-events-none"></div>
+		
+		<div class="max-w-7xl mx-auto relative z-10">
+			<h2 class="text-4xl font-bold text-[var(--color-text)] mb-12 text-center font-mono">
+				Manual BOM sourcing is a time sink.
+			</h2>
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+				<div class="text-center">
+					<div class="w-16 h-16 bg-[var(--color-secondary-dim)] rounded-full flex items-center justify-center mx-auto mb-6">
+						<svg class="w-8 h-8 text-[var(--color-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+						</svg>
+					</div>
+					<h3 class="text-xl font-semibold text-[var(--color-text)] mb-3">150 manual lookups</h3>
+					<p class="text-[var(--color-text-muted)]">
+						Checking 6 providers for 50 parts means 300 manual lookups. BOMexplorer does it in seconds.
+					</p>
+				</div>
+				<div class="text-center">
+					<div class="w-16 h-16 bg-[var(--color-secondary-dim)] rounded-full flex items-center justify-center mx-auto mb-6">
+						<svg class="w-8 h-8 text-[var(--color-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17H3v-2h10v2zm0-4H3v-2h10v2zm0-4H3V7h10v2z" />
+						</svg>
+					</div>
+					<h3 class="text-xl font-semibold text-[var(--color-text)] mb-3">Stock changes overnight</h3>
+					<p class="text-[var(--color-text-muted)]">
+						Data is valid for a moment. Overnight monitoring catches changes before you order.
+					</p>
+				</div>
+				<div class="text-center">
+					<div class="w-16 h-16 bg-[var(--color-secondary-dim)] rounded-full flex items-center justify-center mx-auto mb-6">
+						<svg class="w-8 h-8 text-[var(--color-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4v2m0 4v2M6.34 7.34a9 9 0 1112.32 12.32M6.34 16.66a9 9 0 0012.32-12.32" />
+						</svg>
+					</div>
+					<h3 class="text-xl font-semibold text-[var(--color-text)] mb-3">One part halts production</h3>
+					<p class="text-[var(--color-text-muted)]">
+						One unavailable component can halt your entire production run. Alerts prevent surprises.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- How It Works -->
+	<section class="py-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto">
+			<div class="mb-4 flex justify-center">
+				<span class="text-xs font-mono text-[var(--color-secondary)] uppercase tracking-widest border border-[var(--color-secondary)]/30 rounded-full px-3 py-1">[ HOW IT WORKS ]</span>
+			</div>
+			<h2 class="text-4xl font-bold text-[var(--color-text)] mb-16 text-center font-mono">
+				Get from CSV to shipping in minutes
+			</h2>
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+				<!-- Connection lines for desktop -->
+				<div class="hidden md:block absolute top-24 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent pointer-events-none"></div>
+				
+				<div class="text-center relative">
+					<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-8 shadow-[var(--shadow-card)] h-full flex flex-col">
+						<div class="w-12 h-12 rounded-full border-2 border-[var(--color-secondary)] flex items-center justify-center mx-auto mb-6 text-[var(--color-primary)] font-bold text-lg">1</div>
+						<h3 class="text-xl font-semibold text-[var(--color-text)] mb-3">Upload your BOM</h3>
+						<p class="text-[var(--color-text-muted)] flex-grow">
+							Drag-and-drop your KiCad, Altium, or generic CSV. BOMexplorer auto-detects columns, DNP parts, and preserves raw fields for re-matching.
+						</p>
+					</div>
+				</div>
+				<div class="text-center relative">
+					<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-8 shadow-[var(--shadow-card)] h-full flex flex-col">
+						<div class="w-12 h-12 rounded-full border-2 border-[var(--color-secondary)] flex items-center justify-center mx-auto mb-6 text-[var(--color-primary)] font-bold text-lg">2</div>
+						<h3 class="text-xl font-semibold text-[var(--color-text)] mb-3">AI matches parts</h3>
+						<p class="text-[var(--color-text-muted)] flex-grow">
+							Hierarchical matching across 6 providers with AI-powered classification for tricky components. Confidence badges show match quality.
+						</p>
+					</div>
+				</div>
+				<div class="text-center relative">
+					<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-8 shadow-[var(--shadow-card)] h-full flex flex-col">
+						<div class="w-12 h-12 rounded-full border-2 border-[var(--color-secondary)] flex items-center justify-center mx-auto mb-6 text-[var(--color-primary)] font-bold text-lg">3</div>
+						<h3 class="text-xl font-semibold text-[var(--color-text)] mb-3">Monitor and export</h3>
+						<p class="text-[var(--color-text-muted)] flex-grow">
+							Lock confirmed parts, swap alternatives with one click, and export in formats ready for assembly partners.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<!-- Feature Highlights -->
+	<section class="py-20 px-4 sm:px-6 lg:px-8 bg-[var(--color-surface)]">
+		<div class="max-w-7xl mx-auto">
+			<h2 class="text-4xl font-bold text-[var(--color-text)] mb-12 text-center font-mono">
+				Built for engineers
+			</h2>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+				<FeatureCard
+					title="6 providers, one search"
+					description="Simultaneous search across Mouser, DigiKey, Nexar, OEMSecrets, FindChips, and NextPCB with automatic fallback."
+					icon="🔗"
+				/>
+				<FeatureCard
+					title="AI-powered matching"
+					description="Claude AI classifies tricky components — crystals, fiducials, mounting holes — and generates provider-specific queries."
+					icon="🤖"
+				/>
+				<FeatureCard
+					title="Overnight supply alerts"
+					description="Automated price/stock re-checks with email digests. Catch EOL notices and price spikes before they derail your build."
+					icon="📧"
+				/>
+				<FeatureCard
+					title="Natural language BOM filter"
+					description="Type 'show me capacitors under $0.10' and watch matching rows highlight in real-time. AI Assist for BOM filtering."
+					icon="💬"
+				/>
+			</div>
+		</div>
+	</section>
+
+	<!-- Social Proof -->
+	<section class="py-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-4xl mx-auto text-center">
+			<h2 class="text-3xl font-bold text-[var(--color-text)] mb-12 font-mono">
+				Trusted by hardware engineers worldwide
+			</h2>
+			<!-- These are placeholder testimonials - replace with real quotes before launch -->
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+				<div class="bg-[var(--color-surface)] border-2 border-dashed border-[var(--color-border)] rounded-lg p-6 opacity-60">
+					<div class="absolute -mt-8 -ml-6">
+						<span class="bg-[var(--color-warning)] text-[var(--color-bg)] px-2 py-1 rounded text-xs font-semibold">Placeholder</span>
+					</div>
+					<p class="text-[var(--color-text-muted)] italic mb-4">
+						"Replace this with a real testimonial from a BOMexplorer user."
+					</p>
+					<div class="text-[var(--color-text)] font-semibold">Engineer Name</div>
+					<div class="text-[var(--color-text-muted)] text-sm">Title, Company</div>
+				</div>
+				<div class="bg-[var(--color-surface)] border-2 border-dashed border-[var(--color-border)] rounded-lg p-6 opacity-60">
+					<div class="absolute -mt-8 -ml-6">
+						<span class="bg-[var(--color-warning)] text-[var(--color-bg)] px-2 py-1 rounded text-xs font-semibold">Placeholder</span>
+					</div>
+					<p class="text-[var(--color-text-muted)] italic mb-4">
+						"Add testimonials from beta users or early adopters here."
+					</p>
+					<div class="text-[var(--color-text)] font-semibold">Engineer Name</div>
+					<div class="text-[var(--color-text-muted)] text-sm">Title, Company</div>
+				</div>
+				<div class="bg-[var(--color-surface)] border-2 border-dashed border-[var(--color-border)] rounded-lg p-6 opacity-60">
+					<div class="absolute -mt-8 -ml-6">
+						<span class="bg-[var(--color-warning)] text-[var(--color-bg)] px-2 py-1 rounded text-xs font-semibold">Placeholder</span>
+					</div>
+					<p class="text-[var(--color-text-muted)] italic mb-4">
+						"These placeholders are visibly distinct before launch."
+					</p>
+					<div class="text-[var(--color-text)] font-semibold">Engineer Name</div>
+					<div class="text-[var(--color-text-muted)] text-sm">Title, Company</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- CTA Banner -->
+	<section class="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+		<div class="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 pointer-events-none"></div>
+		<div class="absolute inset-0 bg-radial-gradient from-teal-500/10 to-transparent pointer-events-none"></div>
+		
+		<div class="max-w-4xl mx-auto text-center relative z-10">
+			<h2 class="text-4xl font-bold text-white mb-4 font-mono">
+				Stop checking distributors manually.
+			</h2>
+			<p class="text-blue-100 mb-8 text-lg">
+				Join the waitlist and be among the first to try BOMexplorer.
+			</p>
+			<a href="/contact" class="bg-[var(--color-secondary)] text-[var(--color-bg)] px-8 py-3 rounded-md font-semibold hover:shadow-lg hover:shadow-teal-500/40 transition-all duration-200 inline-block">
+				Get Early Access
+			</a>
+		</div>
+	</section>
+</MarketingLayout>

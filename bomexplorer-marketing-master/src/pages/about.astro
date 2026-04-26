@@ -1,0 +1,102 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+---
+
+<MarketingLayout title="About - BOMexplorer" currentPage="about">
+	<section class="py-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-4xl mx-auto">
+			<div class="text-center mb-16">
+				<h1 class="text-5xl font-bold text-[var(--color-text)] mb-6 font-mono">
+					About BOMexplorer
+				</h1>
+			</div>
+
+			<div class="prose prose-lg prose-invert max-w-none">
+				<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-8 mb-12 shadow-[var(--shadow-card)]">
+					<h2 class="text-2xl font-bold text-[var(--color-text)] mb-6 font-mono">
+						Our mission
+					</h2>
+					<p class="text-[var(--color-text-muted)] text-lg leading-relaxed mb-6">
+						BOMexplorer exists because hardware engineers shouldn't spend hours doing what software can do in seconds.
+					</p>
+				<p class="text-[var(--color-text-muted)] leading-relaxed mb-6">
+					After designing a PCB in KiCad, engineers face a tedious reality: manually checking component availability, pricing, and stock levels across multiple distributors. This process is not only time-consuming but error-prone, with stock levels changing between checks and orders.
+				</p>
+				<p class="text-[var(--color-text-muted)] leading-relaxed">
+					BOMexplorer automates this workflow — searching 6 providers simultaneously, using AI to classify tricky components, monitoring supply chain changes overnight, and alerting you to price spikes or end-of-life notices. Engineers get the data they need to make informed decisions quickly and confidently.
+				</p>
+				</div>
+
+				<div class="mb-12">
+					<h2 class="text-3xl font-bold text-[var(--color-text)] mb-8 font-mono">
+					The problem we're solving
+					</h2>
+					<p class="text-[var(--color-text-muted)] leading-relaxed mb-6">
+						Hardware development has always been about precision and reliability. Yet when it comes to BOM management, engineers are stuck in a manual, inefficient process that wastes valuable time and introduces risk.
+					</p>
+					<p class="text-[var(--color-text-muted)] leading-relaxed mb-6">
+						Consider a typical scenario: You've just finished a KiCad design with 50 components. To ensure you can actually build the board, you need to verify that every part is available and at the right price. Checking 6 providers manually means 300+ individual lookups — and the data you collect is only valid for that moment.
+					</p>
+					<p class="text-[var(--color-text-muted)] leading-relaxed mb-6">
+						Even then, the data you collect is only valid for that moment. Stock levels change, prices fluctuate, and parts go end-of-life. One unavailable component can halt your entire production run.
+					</p>
+					<p class="text-[var(--color-text-muted)] leading-relaxed">
+						This is the reality BOMexplorer was built to change. We give engineers the tools to work smarter, not harder.
+					</p>
+				</div>
+
+				<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-8 mb-12 shadow-[var(--shadow-card)]">
+					<h2 class="text-3xl font-bold text-[var(--color-text)] mb-8 font-mono">
+					Who built this
+					</h2>
+					<div class="flex flex-col md:flex-row items-start gap-8">
+						<div class="flex-shrink-0">
+							<img src="https://imagedelivery.net/EzErua5FfjxwIvZXiki_dA/dc73fea5-06c6-40c8-f37e-2a269c9c6e00/1024pxwide" alt="Peter Dalmaris" class="w-24 h-24 rounded-full object-cover shadow-[var(--shadow-glow-blue)]" />
+						</div>
+						<div>
+							<h3 class="text-xl font-semibold text-[var(--color-text)] mb-2">Peter Dalmaris</h3>
+							<p class="text-[var(--color-secondary)] font-semibold text-sm mb-4 uppercase tracking-wider">
+								Founder, Electronics Educator, PCB Designer, Licensed Pilot
+							</p>
+					<p class="text-[var(--color-text-muted)] leading-relaxed mb-4">
+						Peter is the founder of Tech Explorations, an electronics education platform used by engineers worldwide. With courses on KiCad, Arduino, ESP32, and PCB design, Tech Explorations has helped thousands learn practical electronics skills.
+					</p>
+					<p class="text-[var(--color-text-muted)] leading-relaxed mb-4">
+						BOMexplorer grew out of Peter's frustration with the manual BOM sourcing process while building real PCB projects. As both an educator and practitioner, he understands the pain points engineers face and built BOMexplorer to solve them.
+					</p>
+					<p class="text-[var(--color-text-muted)] leading-relaxed">
+						The platform combines multi-provider data aggregation, AI-powered part matching, supply chain monitoring with overnight re-queries, natural language BOM filtering, and full substitution management — all in one workflow designed by someone who's been in the trenches.
+					</p>
+							<div class="mt-4">
+								<a href="https://techexplorations.com" class="text-[var(--color-secondary)] hover:text-teal-300 transition-colors font-semibold">
+									Visit Tech Explorations →
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+					<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-glow-teal)] transition-all duration-200">
+						<h3 class="text-lg font-semibold text-[var(--color-text)] mb-3 font-mono">Precision over approximation</h3>
+						<p class="text-[var(--color-text-muted)] text-sm">
+							We show you real data, not estimates. Every price, every stock level comes directly from distributors.
+						</p>
+					</div>
+					<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-glow-teal)] transition-all duration-200">
+						<h3 class="text-lg font-semibold text-[var(--color-text)] mb-3 font-mono">Engineer-first</h3>
+						<p class="text-[var(--color-text-muted)] text-sm">
+							Built by a PCB designer, for PCB designers. We understand your workflow and speak your language.
+						</p>
+					</div>
+					<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-glow-teal)] transition-all duration-200">
+						<h3 class="text-lg font-semibold text-[var(--color-text)] mb-3 font-mono">Transparent</h3>
+						<p class="text-[var(--color-text-muted)] text-sm">
+							No dark patterns, no surprise charges. What you see is what you get.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</MarketingLayout>

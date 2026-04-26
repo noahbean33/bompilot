@@ -1,0 +1,38 @@
+@baseUrl = http://localhost:8000
+
+### Register a new user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "testpassword123"
+}
+
+### Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "testpassword123"
+}
+
+### Register system admin
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "bom_admin@futureshock.com.au",
+  "password": "d1gNlQ4saXi!uh7oXNoM"
+}
+
+### Login as system admin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "bom_admin@futureshock.com.au",
+  "password": "d1gNlQ4saXi!uh7oXNoM"
+}
+

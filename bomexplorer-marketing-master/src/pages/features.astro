@@ -1,0 +1,329 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+---
+
+<MarketingLayout title="Features - BOMexplorer" currentPage="features">
+	<section class="py-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-7xl mx-auto">
+			<div class="text-center mb-16">
+				<h1 class="text-5xl font-bold text-[var(--color-text)] mb-6 font-mono">
+					Engineered for precision
+				</h1>
+				<p class="text-xl text-[var(--color-text-muted)] max-w-3xl mx-auto">
+					BOMexplorer automates the tedious parts of BOM management, giving you accurate data and saving hours of manual work.
+				</p>
+			</div>
+
+			<!-- BOM Import -->
+			<div class="mb-20">
+				<div class="mb-8">
+					<span class="text-[var(--color-secondary)] text-sm font-mono font-bold tracking-widest">[ 01 ]</span>
+				</div>
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<div>
+						<h2 class="text-3xl font-bold text-[var(--color-text)] mb-6 font-mono">BOM Import</h2>
+						<div class="space-y-4">
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Multi-format support</h3>
+								<p class="text-[var(--color-text-muted)]">Drag-and-drop CSV import with intelligent parsing. Supports KiCad Symbol Fields Table, Altium BOM exports, and generic formats. Auto-detects column headers (Refs, RefDes, Designator, Qty, MPN, Value).</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">DNP detection</h3>
+								<p class="text-[var(--color-text-muted)]">Automatic recognition of Do Not Populate / Excluded columns from KiCad and Altium. DNP rows are visually dimmed for instant recognition.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Raw field preservation</h3>
+								<p class="text-[var(--color-text-muted)]">Complete original CSV row stored as JSON per line, enabling re-matching without re-import.</p>
+							</div>
+						</div>
+					</div>
+					<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6 shadow-[var(--shadow-card)]">
+						<img src="https://imagedelivery.net/EzErua5FfjxwIvZXiki_dA/be0985f5-2709-4ef7-caef-4863b99b0600/1024pxwide" alt="BOM Import - drag-and-drop CSV upload interface" class="w-full h-auto rounded" />
+					</div>
+				</div>
+			</div>
+
+			<!-- Multi-Provider Search -->
+			<div class="mb-20 bg-[var(--color-surface)] py-16 px-8 rounded-lg shadow-[var(--shadow-card)]">
+				<div class="mb-8">
+					<span class="text-[var(--color-secondary)] text-sm font-mono font-bold tracking-widest">[ 02 ]</span>
+				</div>
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<div class="order-2 lg:order-2">
+						<h2 class="text-3xl font-bold text-[var(--color-text)] mb-6 font-mono">6 providers. One search.</h2>
+						<div class="space-y-4">
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Simultaneous query with fallback</h3>
+								<p class="text-[var(--color-text-muted)]">Queries Nexar, OEMSecrets, DigiKey, Mouser, FindChips, and NextPCB. If the active provider returns no results, automatically tries the next configured provider in sequence.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Source badge per row</h3>
+								<p class="text-[var(--color-text-muted)]">Every BOM line shows which provider supplied the match — always visible, always clear.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Provider health tracking</h3>
+								<p class="text-[var(--color-text-muted)]">Admins can monitor real-time provider status, latency, and error rates with auto-refresh.</p>
+							</div>
+						</div>
+					</div>
+					<div class="order-1 lg:order-1">
+						<img src="https://imagedelivery.net/EzErua5FfjxwIvZXiki_dA/fb596927-a29d-4c51-5ea1-a62f8310d700/1920" alt="Multi-provider search with source badges" class="w-full h-auto rounded" />
+					</div>
+				</div>
+			</div>
+
+			<!-- AI-Powered Matching -->
+			<div class="mb-20">
+				<div class="mb-8">
+					<span class="text-[var(--color-secondary)] text-sm font-mono font-bold tracking-widest">[ 03 ]</span>
+				</div>
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<div>
+						<h2 class="text-3xl font-bold text-[var(--color-text)] mb-6 font-mono">AI-Powered Matching</h2>
+						<div class="space-y-4">
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Hierarchical matching</h3>
+								<p class="text-[var(--color-text-muted)]">Exact MPN → hyphen-stripped MPN → distributor part number → keyword search. Multi-stage matching ensures maximum coverage.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">AI classification</h3>
+								<p class="text-[var(--color-text-muted)]">Claude-powered classification for unmatchable values — crystal symbols, fiducials, mounting holes, copper-only parts. Generates automated, provider-specific queries.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Smart skip list</h3>
+								<p class="text-[var(--color-text-muted)]">Automatically skips known unmatchable values (TestPoint, LED, Fiducial, MountingHole) unless an explicit MPN is provided.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Confidence indicators</h3>
+								<p class="text-[var(--color-text-muted)]">Visual badges: exact MPN, parametric, keyword, AI-suggested, unmatched. Always know match quality at a glance.</p>
+							</div>
+						</div>
+					</div>
+					<div>
+						<img src="https://imagedelivery.net/EzErua5FfjxwIvZXiki_dA/f037da43-658c-4489-3176-306a744a4000/1024pxwide" alt="AI-Powered matching with confidence badges" class="w-full h-auto rounded" />
+					</div>
+				</div>
+			</div>
+
+			<!-- Natural Language Query -->
+			<div class="mb-20 bg-[var(--color-surface)] py-16 px-8 rounded-lg shadow-[var(--shadow-card)]">
+				<div class="mb-8">
+					<span class="text-[var(--color-secondary)] text-sm font-mono font-bold tracking-widest">[ 04 ]</span>
+				</div>
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<div class="order-2 lg:order-2">
+						<h2 class="text-3xl font-bold text-[var(--color-text)] mb-6 font-mono">Natural language query</h2>
+						<div class="space-y-4">
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Talk to your BOM</h3>
+								<p class="text-[var(--color-text-muted)]">Type plain-English filters — "show me capacitors under $0.10" — to instantly highlight matching rows. A rare UX feature in BOM management tools.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Powered by Claude Haiku</h3>
+								<p class="text-[var(--color-text-muted)]">Fast, cost-effective AI with debounced input for real-time highlighting without lag.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Visual filtering</h3>
+								<p class="text-[var(--color-text-muted)]">Matching rows get amber borders for instant visual identification. No scrolling, no exporting — just type and see.</p>
+							</div>
+						</div>
+					</div>
+					<div class="order-1 lg:order-1">
+						<img src="https://imagedelivery.net/EzErua5FfjxwIvZXiki_dA/feeeb268-3e85-44f9-9f7b-32713e5eda00/1920" alt="Natural language query filtering BOM data" class="w-full h-auto rounded" />
+					</div>
+				</div>
+			</div>
+
+			<!-- BOM Table Features -->
+			<div class="mb-20">
+				<div class="mb-8">
+					<span class="text-[var(--color-secondary)] text-sm font-mono font-bold tracking-widest">[ 05 ]</span>
+				</div>
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<div>
+						<h2 class="text-3xl font-bold text-[var(--color-text)] mb-6 font-mono">BOM Table Control</h2>
+						<div class="space-y-4">
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Sortable & editable columns</h3>
+								<p class="text-[var(--color-text-muted)]">Click-to-sort headers, inline-editable ref/value/footprint fields. Virtualized rendering for efficient display of large BOMs.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Column visibility toggle</h3>
+								<p class="text-[var(--color-text-muted)]">Show or hide individual columns to create a customized view focused on what matters to you.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Part thumbnails</h3>
+								<p class="text-[var(--color-text-muted)]">48px clickable image column with fallback icon. Click to open full-size image in new tab.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Row locking</h3>
+								<p class="text-[var(--color-text-muted)]">Per-row lock/unlock to freeze matches (amber highlighting on locked rows). Bulk lock/unlock all with one click.</p>
+							</div>
+						</div>
+					</div>
+					<div>
+						<img src="https://imagedelivery.net/EzErua5FfjxwIvZXiki_dA/30865791-f39a-4dc0-e9f7-0a3ce28ebb00/1920" alt="BOM Table Control with locked rows and column visibility" class="w-full h-auto rounded" />
+					</div>
+				</div>
+			</div>
+
+			<!-- Alternatives & Substitution -->
+			<div class="mb-20 bg-[var(--color-surface)] py-16 px-8 rounded-lg shadow-[var(--shadow-card)]">
+				<div class="mb-8">
+					<span class="text-[var(--color-secondary)] text-sm font-mono font-bold tracking-widest">[ 06 ]</span>
+				</div>
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<div class="order-2 lg:order-2">
+						<h2 class="text-3xl font-bold text-[var(--color-text)] mb-6 font-mono">Alternatives & Substitution</h2>
+						<div class="space-y-4">
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Full-page alternatives view</h3>
+								<p class="text-[var(--color-text-muted)]">Dedicated view per BOM line showing all ranked candidate parts with pricing, stock levels, and distributor information.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">One-click swap</h3>
+								<p class="text-[var(--color-text-muted)]">Swap parts with a confirmation dialog. Auto-records every substitution for audit trail.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Substitution history</h3>
+								<p class="text-[var(--color-text-muted)]">Collapsible timeline showing all swaps with MPN, timestamps, and trigger reason. Full traceability.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Part ranking</h3>
+								<p class="text-[var(--color-text-muted)]">AI-suggested candidates marked with badge. Rank 2+ results auto-stored as alternatives.</p>
+							</div>
+						</div>
+					</div>
+					<div class="order-1 lg:order-1">
+						<img src="https://imagedelivery.net/EzErua5FfjxwIvZXiki_dA/3de15d6f-a38b-42b3-5b1d-699b00eb9b00/1920" alt="Alternatives and substitution view" class="w-full h-auto rounded" />
+					</div>
+				</div>
+			</div>
+
+			<!-- Supply Chain Monitoring -->
+			<div class="mb-20">
+				<div class="mb-8">
+					<span class="text-[var(--color-secondary)] text-sm font-mono font-bold tracking-widest">[ 07 ]</span>
+				</div>
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<div>
+						<h2 class="text-3xl font-bold text-[var(--color-text)] mb-6 font-mono">Supply Chain Monitoring</h2>
+						<div class="space-y-4">
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Overnight re-query</h3>
+								<p class="text-[var(--color-text-muted)]">Celery background job re-checks all active BOM lines for price and stock changes. Set it and forget it.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Flag detection</h3>
+								<p class="text-[var(--color-text-muted)]">Out-of-stock, low-stock, price spike, end-of-life, and lead-time increase alerts — all detected automatically.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Alert lifecycle</h3>
+								<p class="text-[var(--color-text-muted)]">Open → Watching → Ignored → Resolved workflow with snooze support. Control which alerts need action.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Morning digest email</h3>
+								<p class="text-[var(--color-text-muted)]">Start your day informed. Automated email summary of new flags, delivered to your inbox each morning.</p>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6 shadow-[var(--shadow-card)]">
+							<div class="bg-amber-500/5 rounded border-2 border-amber-500/40 min-h-[280px] flex flex-col items-center justify-center p-8 text-center">
+								<svg class="w-12 h-12 text-amber-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+								</svg>
+								<span class="text-amber-400 text-sm font-mono font-semibold mb-2">UNDER DEVELOPMENT</span>
+								<p class="text-[var(--color-text-muted)] text-xs">Overnight supply chain alerts coming soon — automated re-queries, price spike detection, and email digests.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Preferences -->
+			<div class="mb-20 bg-[var(--color-surface)] py-16 px-8 rounded-lg shadow-[var(--shadow-card)]">
+				<div class="mb-8">
+					<span class="text-[var(--color-secondary)] text-sm font-mono font-bold tracking-widest">[ 08 ]</span>
+				</div>
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<div class="order-2 lg:order-2">
+						<h2 class="text-3xl font-bold text-[var(--color-text)] mb-6 font-mono">Preferences & Configuration</h2>
+						<div class="space-y-4">
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Global user preferences</h3>
+								<p class="text-[var(--color-text-muted)]">Configure distributor order, excluded distributors, preferred manufacturers, accepted generic passives, lifecycle policy, currency, region, and grade.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Per-project overrides</h3>
+								<p class="text-[var(--color-text-muted)]">Override global settings per project — distributor restrictions, quantity, grade, lifecycle policy. Null values inherit from global.</p>
+							</div>
+						</div>
+					</div>
+					<div class="order-1 lg:order-1">
+						<img src="https://imagedelivery.net/EzErua5FfjxwIvZXiki_dA/ac368677-8eda-4737-272f-8f03d2f21500/1920" alt="Preferences and configuration settings" class="w-full h-auto rounded" />
+					</div>
+				</div>
+			</div>
+
+			<!-- Export -->
+			<div class="mb-20">
+				<div class="mb-8">
+					<span class="text-[var(--color-secondary)] text-sm font-mono font-bold tracking-widest">[ 09 ]</span>
+				</div>
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<div>
+						<h2 class="text-3xl font-bold text-[var(--color-text)] mb-6 font-mono">Export</h2>
+						<div class="space-y-4">
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">CSV Export</h3>
+								<p class="text-[var(--color-text-muted)]">UTF-8 BOM, comma-separated, generic format compatible with any spreadsheet application.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Excel Export</h3>
+								<p class="text-[var(--color-text-muted)]">openpyxl-generated with bold header row, auto-sized columns, sheet named "BOM".</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Manufacturer CSV Export</h3>
+								<p class="text-[var(--color-text-muted)]">12-column manufacturer-ready format for assembly partners.</p>
+							</div>
+						</div>
+					</div>
+					<div>
+						<img src="https://imagedelivery.net/EzErua5FfjxwIvZXiki_dA/0e439425-8114-416d-dbc1-6c0cc8b8ed00/1024pxwide" alt="Export dialog with multiple format options" class="w-full h-auto rounded" />
+					</div>
+				</div>
+			</div>
+
+			<!-- Authentication & Account -->
+			<div class="mb-20 bg-[var(--color-surface)] py-16 px-8 rounded-lg shadow-[var(--shadow-card)]">
+				<div class="mb-8">
+					<span class="text-[var(--color-secondary)] text-sm font-mono font-bold tracking-widest">[ 10 ]</span>
+				</div>
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<div class="order-2 lg:order-2">
+						<h2 class="text-3xl font-bold text-[var(--color-text)] mb-6 font-mono">Security & Account</h2>
+						<div class="space-y-4">
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">JWT authentication</h3>
+								<p class="text-[var(--color-text-muted)]">Email/password auth with short-lived access + refresh tokens in httpOnly cookies.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Email verification</h3>
+								<p class="text-[var(--color-text-muted)]">Signup verification flow with resend capability.</p>
+							</div>
+							<div>
+								<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2">Secure password reset</h3>
+								<p class="text-[var(--color-text-muted)]">Tokenised email link with 24h expiry. Always-200 response to prevent email enumeration.</p>
+							</div>
+						</div>
+					</div>
+					<div class="order-1 lg:order-1">
+						<img src="https://imagedelivery.net/EzErua5FfjxwIvZXiki_dA/9e472433-5c3e-40e8-92eb-f115512abd00/1024pxwide" alt="Security and account authentication" class="w-full h-auto rounded" />
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</section>
+</MarketingLayout>

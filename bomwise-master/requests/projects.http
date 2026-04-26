@@ -1,0 +1,35 @@
+@baseUrl = http://localhost:8000
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzc1NDM3NDQyLCJ0eXBlIjoiYWNjZXNzIn0.SPwGf6Q9fZbkbp0yjUa-8LIK_QqOom_r5K3Wo_L4eBM
+
+
+### Trigger BOM matching
+POST {{baseUrl}}/projects/1/match
+Authorization: Bearer {{accessToken}}
+
+### Get user global preferences
+GET {{baseUrl}}/users/me/preferences
+Authorization: Bearer {{accessToken}}
+
+### Update user global preferences
+PUT {{baseUrl}}/users/me/preferences
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "preferred_currency": "AUD",
+  "preferred_distributors": ["DigiKey", "Mouser"]
+}
+
+### Get project preferences
+GET {{baseUrl}}/projects/1/preferences
+Authorization: Bearer {{accessToken}}
+
+### Set project-level override (currency only — leave distributors to inherit from global)
+PUT {{baseUrl}}/projects/1/preferences
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "preferred_currency": "USD",
+  "preferred_distributors": null
+}

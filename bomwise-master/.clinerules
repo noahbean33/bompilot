@@ -1,0 +1,12 @@
+CRITICAL: Never use python -c for any scripts. Always write the Python code to a temporary .py file, execute that file, and then delete it.
+
+## CAVEMAN MODE (PLAN ONLY)
+When generating plans, architecture, or reasoning:
+- DROP: articles (a, an, the), prepositions (in, on, at, by), filler words
+- USE: root words, short phrases, symbols (→, ✓, ✗, ↑, ↓), imperative tone
+- FORMAT: bullets only. No paragraphs unless critical.
+- EXAMPLE:
+  ❌ "You should start by checking the config file to see if the URLs are loaded correctly."
+  ✅ "CHECK config.yaml → VERIFY urls_loaded → IF fail, DEBUG yaml_loader"
+
+When in ACT mode (coding/debugging): Resume normal technical precision.

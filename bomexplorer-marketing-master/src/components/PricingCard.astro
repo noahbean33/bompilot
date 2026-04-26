@@ -1,0 +1,39 @@
+---
+export interface Props {
+	title: string;
+	price: string;
+	description: string;
+	features: string[];
+	popular?: boolean;
+}
+
+const { title, price, description, features, popular = false } = Astro.props;
+---
+
+<div class={`bg-[var(--color-surface)] border rounded-lg p-8 relative transition-all duration-200 ${popular ? 'border-[var(--color-secondary)] shadow-[var(--shadow-glow-blue)]' : 'border-[var(--color-border)] shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card)]'}`}>
+	{popular && (
+		<div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+			<span class="bg-[var(--color-secondary)] text-[var(--color-bg)] px-3 py-1 rounded-full text-xs font-semibold">
+				Most Popular
+			</span>
+		</div>
+	)}
+	<div class="text-center mb-6">
+		<h3 class="text-xl font-semibold text-[var(--color-text)] mb-3 font-mono">{title}</h3>
+		<div class="text-3xl font-bold text-[var(--color-text)] font-mono mb-2">{price}</div>
+		<p class="text-[var(--color-text-muted)] text-sm">{description}</p>
+	</div>
+	<ul class="space-y-3 mb-8">
+		{features.map(feature => (
+			<li class="flex items-start text-[var(--color-text)] text-sm">
+				<svg class="w-4 h-4 text-[var(--color-secondary)] mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+					<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+				</svg>
+				<span>{feature}</span>
+			</li>
+		))}
+	</ul>
+	<a href="/contact" class={`block w-full text-center py-2 rounded-md font-semibold transition-all duration-200 ${popular ? 'bg-[var(--color-primary)] text-white hover:shadow-lg hover:shadow-blue-500/40' : 'border border-[var(--color-border)] text-[var(--color-text)] hover:bg-[var(--color-surface-2)]'}`}>
+		Get Started
+	</a>
+</div>

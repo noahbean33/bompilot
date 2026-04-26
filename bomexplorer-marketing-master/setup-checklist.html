@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOMexplorer Marketing Site — Setup Checklist</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --border: #2a2d3a;
+    --accent: #4f8ef7;
+    --accent2: #00d4aa;
+    --text: #e2e4ed;
+    --muted: #6b7280;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --code-bg: #12151f;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px 20px;
+    line-height: 1.6;
+  }
+
+  .container { max-width: 760px; margin: 0 auto; }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 24px;
+    margin-bottom: 40px;
+  }
+
+  header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  header p {
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .phase {
+    margin-bottom: 40px;
+  }
+
+  .phase-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 16px;
+  }
+
+  .step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+  }
+
+  .step-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .step-num {
+    background: var(--border);
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .step-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .step-note {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .cmd-block {
+    margin-top: 10px;
+  }
+
+  .cmd {
+    display: flex;
+    align-items: center;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 6px;
+    font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: #a8d8a8;
+    gap: 10px;
+  }
+
+  .cmd span { flex: 1; word-break: break-all; }
+
+  .copy-btn {
+    background: var(--border);
+    border: none;
+    border-radius: 4px;
+    color: var(--muted);
+    font-size: 0.72rem;
+    padding: 3px 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+    flex-shrink: 0;
+  }
+
+  .copy-btn:hover { background: var(--accent); color: #fff; }
+  .copy-btn.copied { background: var(--success); color: #fff; }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .tag-check { background: #1a2e1a; color: var(--success); border: 1px solid #2d4a2d; }
+  .tag-required { background: #2a1f10; color: var(--warning); border: 1px solid #4a3a20; }
+  .tag-optional { background: #1a1f2e; color: var(--accent); border: 1px solid #2a3050; }
+
+  .note-box {
+    background: #1a2030;
+    border: 1px solid #2a3555;
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 0.84rem;
+    color: #a0b4d0;
+    margin-top: 10px;
+  }
+
+  .warn-box {
+    background: #1e1a10;
+    border: 1px solid #3a3020;
+    border-left: 3px solid var(--warning);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 0.84rem;
+    color: #b8a060;
+    margin-top: 10px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+
+  footer {
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 50px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>BOMexplorer Marketing Site — Setup Checklist</h1>
+    <p>Run these steps once in your terminal before handing over to Claude Code.</p>
+  </header>
+
+  <!-- PHASE 1 -->
+  <div class="phase">
+    <div class="phase-title">Phase 1 — Verify Prerequisites</div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Check Node.js version <span class="tag tag-required">Required ≥ v18</span></div>
+          <div class="step-note">Astro requires Node 18 or later. You likely have this from the main project (nvm).</div>
+        </div>
+      </div>
+      <div class="cmd-block">
+        <div class="cmd"><span>node --version</span><button class="copy-btn" onclick="copy(this,'node --version')">Copy</button></div>
+      </div>
+      <div class="note-box">If below v18, run: <code>nvm install 20 && nvm use 20 && nvm alias default 20</code></div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Check Git <span class="tag tag-required">Required</span></div>
+          <div class="step-note">Needed for Cloudflare Pages deployment.</div>
+        </div>
+      </div>
+      <div class="cmd-block">
+        <div class="cmd"><span>git --version</span><button class="copy-btn" onclick="copy(this,'git --version')">Copy</button></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Check GitHub CLI <span class="tag tag-optional">Optional but convenient</span></div>
+          <div class="step-note">Lets you create the GitHub repo from the terminal. Install if missing.</div>
+        </div>
+      </div>
+      <div class="cmd-block">
+        <div class="cmd"><span>gh --version</span><button class="copy-btn" onclick="copy(this,'gh --version')">Copy</button></div>
+        <div class="cmd"><span>sudo apt install gh   # if not installed</span><button class="copy-btn" onclick="copy(this,'sudo apt install gh')">Copy</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase">
+    <div class="phase-title">Phase 2 — Scaffold Astro Project</div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Navigate to project directory</div>
+        </div>
+      </div>
+      <div class="cmd-block">
+        <div class="cmd"><span>cd ~/Documents/code_projects/bomexplorer_marketing</span><button class="copy-btn" onclick="copy(this,'cd ~/Documents/code_projects/bomexplorer_marketing')">Copy</button></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <div>
+          <div class="step-title">Create Astro project in current directory</div>
+          <div class="step-note">When prompted: choose "Empty" template, Yes to TypeScript, Yes to install dependencies.</div>
+        </div>
+      </div>
+      <div class="cmd-block">
+        <div class="cmd"><span>npm create astro@latest -- --template minimal .</span><button class="copy-btn" onclick="copy(this,'npm create astro@latest -- --template minimal .')">Copy</button></div>
+      </div>
+      <div class="warn-box">The <code>.</code> installs into the current directory. Make sure you're inside <code>bomexplorer_marketing/</code> first.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">6</div>
+        <div>
+          <div class="step-title">Add Tailwind CSS</div>
+          <div class="step-note">Accept all prompts.</div>
+        </div>
+      </div>
+      <div class="cmd-block">
+        <div class="cmd"><span>npx astro add tailwind</span><button class="copy-btn" onclick="copy(this,'npx astro add tailwind')">Copy</button></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">7</div>
+        <div>
+          <div class="step-title">Verify dev server starts</div>
+          <div class="step-note">Should open at http://localhost:4321. Ctrl+C to stop.</div>
+        </div>
+      </div>
+      <div class="cmd-block">
+        <div class="cmd"><span>npm run dev</span><button class="copy-btn" onclick="copy(this,'npm run dev')">Copy</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase">
+    <div class="phase-title">Phase 3 — Git &amp; GitHub</div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">8</div>
+        <div>
+          <div class="step-title">Initialise Git repo &amp; first commit</div>
+        </div>
+      </div>
+      <div class="cmd-block">
+        <div class="cmd"><span>git init</span><button class="copy-btn" onclick="copy(this,'git init')">Copy</button></div>
+        <div class="cmd"><span>git add .</span><button class="copy-btn" onclick="copy(this,'git add .')">Copy</button></div>
+        <div class="cmd"><span>git commit -m "chore: scaffold Astro marketing site"</span><button class="copy-btn" onclick="copy(this,'git commit -m \"chore: scaffold Astro marketing site\"')">Copy</button></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">9</div>
+        <div>
+          <div class="step-title">Create GitHub repo and push</div>
+          <div class="step-note">Using GitHub CLI. Creates a public repo named bomexplorer-marketing.</div>
+        </div>
+      </div>
+      <div class="cmd-block">
+        <div class="cmd"><span>gh repo create bomexplorer-marketing --public --source=. --remote=origin --push</span><button class="copy-btn" onclick="copy(this,'gh repo create bomexplorer-marketing --public --source=. --remote=origin --push')">Copy</button></div>
+      </div>
+      <div class="note-box">If you prefer private: replace <code>--public</code> with <code>--private</code>. Cloudflare Pages works with both.</div>
+    </div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="phase">
+    <div class="phase-title">Phase 4 — Cloudflare Pages (do after Claude Code builds the site)</div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">10</div>
+        <div>
+          <div class="step-title">Connect repo to Cloudflare Pages</div>
+          <div class="step-note">Do this from the Cloudflare dashboard after the site is built.</div>
+        </div>
+      </div>
+      <div class="note-box">
+        <strong>Cloudflare Pages settings:</strong><br><br>
+        Build command: <code>npm run build</code><br>
+        Build output directory: <code>dist</code><br>
+        Node.js version: <code>20</code> (set in Environment Variables as <code>NODE_VERSION = 20</code>)
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">11</div>
+        <div>
+          <div class="step-title">Point bomexplorer.app root domain to Cloudflare Pages</div>
+          <div class="step-note">In Cloudflare Pages → Custom Domains → add bomexplorer.app. DNS is managed by Cloudflare so this is automatic.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <footer>
+    Once these steps are done, open the project in VS Code and run the Claude Code prompt.
+  </footer>
+
+</div>
+
+<script>
+function copy(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 1800);
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+Subject: Your BOMExplorer account has been upgraded to Pro
+
+Your BOMexplorer account has been upgraded to Pro!
+
+Your trial is valid until {trial_end_date}.
+
+Pro includes:
+  • Unlimited projects
+  • Unlimited BOM lines
+  • AI Assist (500 lines/month)
+  • AI Advisor (50 queries/month)
+
+Enjoy your Pro access!

@@ -1,0 +1,108 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+---
+
+<MarketingLayout title="Contact - BOMexplorer" currentPage="contact">
+	<section class="py-20 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-2xl mx-auto">
+			<div class="text-center mb-12">
+				<h1 class="text-4xl font-bold text-[var(--color-text)] mb-6 font-mono">
+					Get in touch
+				</h1>
+				<p class="text-xl text-[var(--color-text-muted)]">
+					Questions, feedback, or partnership enquiries — we read everything.
+				</p>
+			</div>
+
+			<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-8 shadow-[var(--shadow-card)]">
+				<form action="https://formspree.io/f/mgorzzwj" method="POST" class="space-y-6">
+					<input type="hidden" name="_subject" value="BOMexplorer Contact Form Submission" />
+					<div>
+						<label for="name" class="block text-sm font-medium text-[var(--color-text)] mb-2">
+							Name
+						</label>
+						<input
+							type="text"
+							id="name"
+							name="name"
+							required
+							class="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-md px-4 py-3 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-secondary)] focus:ring-2 focus:ring-[var(--color-secondary)]/30 transition-all duration-200"
+							placeholder="Your full name"
+						/>
+					</div>
+
+					<div>
+						<label for="email" class="block text-sm font-medium text-[var(--color-text)] mb-2">
+							Email
+						</label>
+						<input
+							type="email"
+							id="email"
+							name="email"
+							required
+							class="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-md px-4 py-3 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-secondary)] focus:ring-2 focus:ring-[var(--color-secondary)]/30 transition-all duration-200"
+							placeholder="your.email@example.com"
+						/>
+					</div>
+
+					<div>
+						<label for="subject" class="block text-sm font-medium text-[var(--color-text)] mb-2">
+							Subject
+						</label>
+						<select
+							id="subject"
+							name="subject"
+							required
+							class="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-md px-4 py-3 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-secondary)] focus:ring-2 focus:ring-[var(--color-secondary)]/30 transition-all duration-200"
+						>
+							<option value="">Select a subject</option>
+							<option value="general">General Inquiry</option>
+							<option value="bug">Bug Report</option>
+							<option value="partnership">Partnership</option>
+							<option value="early-access">Early Access</option>
+							<option value="support">Technical Support</option>
+						</select>
+					</div>
+
+					<div>
+						<label for="message" class="block text-sm font-medium text-[var(--color-text)] mb-2">
+							Message
+						</label>
+						<textarea
+							id="message"
+							name="message"
+							rows="6"
+							required
+							class="w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-md px-4 py-3 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-secondary)] focus:ring-2 focus:ring-[var(--color-secondary)]/30 transition-all duration-200 resize-vertical"
+							placeholder="Tell us about your project or question..."
+						></textarea>
+					</div>
+
+					<div>
+						<button
+							type="submit"
+							class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-md font-semibold hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-200"
+						>
+							Send Message
+						</button>
+					</div>
+				</form>
+			</div>
+
+			<div class="mt-12 text-center">
+				<p class="text-[var(--color-text-muted)] mb-4">
+					Prefer email? <a href="mailto:hello@bomexplorer.app" class="text-[var(--color-secondary)] hover:text-teal-300 transition-colors font-mono font-semibold">hello@bomexplorer.app</a>
+				</p>
+				<div class="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6 shadow-[var(--shadow-card)]">
+					<h3 class="text-lg font-semibold text-[var(--color-text)] mb-2 font-mono">Early Access</h3>
+					<p class="text-[var(--color-text-muted)] mb-4">
+						Want early access to BOMexplorer? Select 'Early access' above and tell us about your project. We're particularly interested in hearing from KiCad users and hardware teams.
+					</p>
+					<p class="text-[var(--color-text-muted)] text-sm">
+						Expected launch: Q2 2025
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+</MarketingLayout>
